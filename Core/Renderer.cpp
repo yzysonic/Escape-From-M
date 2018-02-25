@@ -34,8 +34,8 @@ void Renderer::Create(void)
 	// サンプラーステートパラメータの設定
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);	// テクスチャＵ値の繰り返し設定
 	pDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);	// テクスチャＶ値の繰り返し設定
-	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);	// テクスチャ拡大時の補間設定
-	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);	// テクスチャ縮小時の補間設定
+	pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DX_FILTER_LINEAR);	// テクスチャ拡大時の補間設定
+	pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DX_FILTER_LINEAR);	// テクスチャ縮小時の補間設定
 
 	// テクスチャステージ加算合成処理
 	pDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);	// 最初のアルファ引数

@@ -121,9 +121,10 @@ void RenderSpace::Draw(void)
 			// バックバッファ＆Ｚバッファのクリア
 			pDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), camera->backColor, 1.0f, 0);
 
-			// ヴューマトリクス、プロジェクションマトリクスの計算
-			camera->getViewMatrix(true);
-			camera->getProjectionMatrix(true);
+			// ビューマトリクスの設定
+			pDevice->SetTransform(D3DTS_VIEW, &camera->getViewMatrix(true));
+			// プロジェクションマトリクスの設定
+			pDevice->SetTransform(D3DTS_PROJECTION, &camera->getProjectionMatrix(true));
 
 			// レイヤーごとに
 			for (int i = 0; i < (int)Layer::MAX; i++)

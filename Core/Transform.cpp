@@ -10,6 +10,9 @@ Transform::Transform(void)
 	this->rotation = Vector3(0, 0, 0);
 	this->scale = Vector3(1, 1, 1);
 	this->up = Vector3(0, 1, 0);
+	this->front = Vector3(0, 0, -1);
+
+	D3DXMatrixIdentity(&this->mtx_world);
 
 }
 
@@ -44,6 +47,13 @@ void Transform::setUp(Vector3 up)
 	this->rotation.z = atan2f(up.y, up.x) - PI / 2;
 }
 
+void Transform::setFront(Vector3 front)
+{
+	this->front = front.normalized();
+	this->rotation.y = atan2f(-front.z, front.x) - PI / 2;
+
+}
+
 void Transform::rotate(Vector3 angle)
 {
 	this->rotation += angle;
@@ -75,6 +85,20 @@ void Transform::lookAt(Vector3 const & target)
 void Transform::lookAt(Transform * target)
 {
 	lookAt(target->position);
+}
+
+void Transform::UpdateWorldMatrix(void)
+{
+	D3DXMATRIX mtxScl, mtxRot, mtxTranslate;
+
+	// ƒXƒP[ƒ‹‚ðŒvŽZ
+	D3DXMatrixScaling(&mtxScl, this->object->transform.scale.x, this->object->transform.scale.y, this->object->transform.scale.z);
+	// ‰ñ“]‚ðŒvŽZ
+	D3DXMatrixRotationYawPitchRoll(&mtxRot, this->object->transform.getRotation().y, this->object->transform.getRotation().x, this->object->transform.getRotation().z);
+	// •½sˆÚ“®‚ðŒvŽZ
+	D3DXMatrixTranslation(&mtxTranslate, this->object->transform.position.x, this->object->transform.position.y, this->object->transform.position.z);
+
+	this->mtx_world = mtxScl*mtxRot*mtxTranslate;
 }
 
 void Transform::updateVector(void)

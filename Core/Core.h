@@ -21,6 +21,8 @@
 #include "Event.h"
 #include "Shader.h"
 #include "ParticleSystem.h"
+#include "StaticModel.h"
+#include "SkinnedModel.h"
 
 #include <vector>
 #include <list>

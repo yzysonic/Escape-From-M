@@ -22,7 +22,7 @@
     <ProjectGuid>{EB637E1A-DD3C-4078-AE13-A39B7DBE9E53}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EscapeFromM</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -145,7 +145,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CameraPlay.cpp" />
+    <ClCompile Include="CameraSmooth.cpp" />
+    <ClCompile Include="Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Core\Billboard.cpp" />
+    <ClCompile Include="Core\BoneFrame.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Collider.cpp" />
     <ClCompile Include="Core\Collision.cpp" />
@@ -174,7 +177,9 @@
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Script.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
+    <ClCompile Include="Core\SkinnedModel.cpp" />
     <ClCompile Include="Core\Sound.cpp" />
+    <ClCompile Include="Core\StaticModel.cpp" />
     <ClCompile Include="Core\System.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Time.cpp" />
@@ -182,13 +187,19 @@
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="Shadow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CameraPlay.h" />
+    <ClInclude Include="CameraSmooth.h" />
+    <ClInclude Include="Core\AllocateHirerachy.h" />
     <ClInclude Include="Core\Billboard.h" />
+    <ClInclude Include="Core\BoneFrame.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\Collider.h" />
     <ClInclude Include="Core\Collision.h" />
@@ -223,7 +234,9 @@
     <ClInclude Include="Core\Script.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\SkinnedModel.h" />
     <ClInclude Include="Core\Sound.h" />
+    <ClInclude Include="Core\StaticModel.h" />
     <ClInclude Include="Core\System.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Time.h" />
@@ -231,8 +244,16 @@
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="Shadow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\InstancingVS.hlsl">
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -199,6 +199,10 @@ void Direct3D::ShowErrorMesg(const HRESULT &hr)
 {
 	MessageBox(s_hWnd, DXGetErrorDescription(hr), DXGetErrorString(hr), MB_OK | MB_ICONWARNING);
 }
+const char* Direct3D::GetErrorMesg(const HRESULT & hr)
+{
+	return DXGetErrorString(hr);
+}
 #endif
 
 ILostAndReset::ILostAndReset(void)
