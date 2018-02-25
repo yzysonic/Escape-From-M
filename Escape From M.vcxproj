@@ -22,7 +22,7 @@
     <ProjectGuid>{EB637E1A-DD3C-4078-AE13-A39B7DBE9E53}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>EscapeFromM</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
