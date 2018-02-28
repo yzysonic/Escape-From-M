@@ -7,6 +7,7 @@
 struct VtxParticleGeometry
 {
 	Vector3 pos;
+	Vector2 uv;
 };
 
 struct VtxParticleInstance
@@ -59,6 +60,10 @@ private:
 class ParticleSystem : public Drawable, public ILostAndReset
 {
 public:
+	float emission_rate;
+	bool loop;
+	Texture* pTexture;
+
 	ParticleSystem(UINT particle_max = 100, IParticleBehavior* behavior = nullptr);
 	~ParticleSystem(void);
 
@@ -73,9 +78,6 @@ public:
 	UINT GetParticleNum(void);
 	template<class T>
 	T* GetBehavior(void);
-
-	float emission_rate;
-	bool loop;
 
 private:
 	IDirect3DVertexDeclaration9 *decl;

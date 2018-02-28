@@ -8,6 +8,7 @@ ParticleSystem::ParticleSystem(UINT particle_max, IParticleBehavior* behavior) :
 	this->particle_max = particle_max;
 	this->particle_num = 0;
 	this->loop = false;
+	this->pTexture = Texture::none;
 
 	SetBehavior(behavior);
 	this->behavior->MakeElement(&this->elements, &this->pitch, particle_max);
@@ -125,7 +126,7 @@ void ParticleSystem::Draw(void)
 	pDevice->SetVertexShader(this->vshader->pD3DShader);
 	pDevice->SetIndices(this->pIndexBuff);
 
-	pDevice->SetTexture(0, NULL);
+	pDevice->SetTexture(0, this->pTexture->pDXTex);
 
 	pDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST, 0, 0, 4, 0, 2);
 
@@ -164,10 +165,10 @@ void ParticleSystem::InitDraw(void)
 
 	// ポリゴンのデータ
 	VtxParticleGeometry vtx[4] = {
-		{ Vector3(-0.5f, 0.5f, 0.0f) },
-		{ Vector3(0.5f, 0.5f, 0.0f) },
-		{ Vector3(-0.5f,-0.5f, 0.0f) },
-		{ Vector3(0.5f,-0.5f, 0.0f) }
+		{ Vector3(-0.5f, 0.5f, 0.0f) , Vector2(0.0f, 0.0f) },
+		{ Vector3(0.5f, 0.5f, 0.0f)  , Vector2(1.0f, 0.0f) },
+		{ Vector3(-0.5f,-0.5f, 0.0f) , Vector2(0.0f, 1.0f) },
+		{ Vector3(0.5f,-0.5f, 0.0f)  , Vector2(1.0f, 1.0f) }
 	};
 
 
@@ -176,6 +177,7 @@ void ParticleSystem::InitDraw(void)
 	{
 		// Stream 0
 		{ 0,  0, D3DDECLTYPE_FLOAT3, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_POSITION, 0 },
+		{ 0,  12, D3DDECLTYPE_FLOAT2, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 0 },
 
 		// Stream 1
 		{ 1, 0,  D3DDECLTYPE_FLOAT4, D3DDECLMETHOD_DEFAULT, D3DDECLUSAGE_TEXCOORD, 1 },

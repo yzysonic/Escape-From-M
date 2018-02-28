@@ -9,14 +9,14 @@ CameraPlay::CameraPlay(void)
 void CameraPlay::Init(void)
 {
 	camera = dynamic_cast<Camera*>(object);
+	Vector3 offset = camera->transform.position - camera->at;
 
-	theta = atan2f(sqrtf(camera->transform.position.x*camera->transform.position.x + camera->transform.position.z*camera->transform.position.z), camera->transform.position.y);
-	phi = atan2f(camera->transform.position.z, camera->transform.position.x);
+	theta = atan2f(sqrtf(offset.x*offset.x + offset.z*offset.z), offset.y);
+	phi = atan2f(offset.z, offset.x);
 	move_theta = 0.0f;
 	move_phi = 0.0f;
-	dis = camera->transform.position.length();
+	dis = offset.length();
 	target_dis = dis;
-	last_transform = camera->transform;
 }
 
 void CameraPlay::Update(void)
@@ -33,7 +33,6 @@ void CameraPlay::Update(void)
 
 void CameraPlay::Uninit(void)
 {
-	camera->transform = last_transform;
 }
 
 

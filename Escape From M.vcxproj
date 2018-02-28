@@ -144,8 +144,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="CameraPlay.cpp" />
+    <ClCompile Include="CameraSmooth.cpp" />
+    <ClCompile Include="Core\AllocateHirerachy.cpp" />
     <ClCompile Include="Core\Billboard.cpp" />
+    <ClCompile Include="Core\BoneFrame.cpp" />
     <ClCompile Include="Core\Camera.cpp" />
     <ClCompile Include="Core\Collider.cpp" />
     <ClCompile Include="Core\Collision.cpp" />
@@ -174,7 +178,9 @@
     <ClCompile Include="Core\Scene.cpp" />
     <ClCompile Include="Core\Script.cpp" />
     <ClCompile Include="Core\Shader.cpp" />
+    <ClCompile Include="Core\SkinnedModel.cpp" />
     <ClCompile Include="Core\Sound.cpp" />
+    <ClCompile Include="Core\StaticModel.cpp" />
     <ClCompile Include="Core\System.cpp" />
     <ClCompile Include="Core\Texture.cpp" />
     <ClCompile Include="Core\Time.cpp" />
@@ -186,14 +192,22 @@
     <ClCompile Include="EnemyNormal.cpp" />
     <ClCompile Include="EnemyRare.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="MagicSquare.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneMakotoTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="Shadow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Barrier.h" />
     <ClInclude Include="CameraPlay.h" />
+    <ClInclude Include="CameraSmooth.h" />
+    <ClInclude Include="Core\AllocateHirerachy.h" />
     <ClInclude Include="Core\Billboard.h" />
+    <ClInclude Include="Core\BoneFrame.h" />
     <ClInclude Include="Core\Camera.h" />
     <ClInclude Include="Core\Collider.h" />
     <ClInclude Include="Core\Collision.h" />
@@ -228,7 +242,9 @@
     <ClInclude Include="Core\Script.h" />
     <ClInclude Include="Core\Shader.h" />
     <ClInclude Include="Core\Singleton.h" />
+    <ClInclude Include="Core\SkinnedModel.h" />
     <ClInclude Include="Core\Sound.h" />
+    <ClInclude Include="Core\StaticModel.h" />
     <ClInclude Include="Core\System.h" />
     <ClInclude Include="Core\Texture.h" />
     <ClInclude Include="Core\Time.h" />
@@ -240,9 +256,31 @@
     <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="EnemyRare.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="MagicSquare.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneMakotoTest.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="Shadow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\InstancingVS.hlsl">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BarrierPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <FileType>Document</FileType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">BarrierPS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">3.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">BarrierPS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">3.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

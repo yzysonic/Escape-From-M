@@ -31,6 +31,7 @@ public:
 	static bool SetWindowMode(bool windowMode);
 #ifdef _DEBUG
 	static void ShowErrorMesg(const HRESULT &hr);
+	static const char* GetErrorMesg(const HRESULT &hr);
 #endif
 
 private:

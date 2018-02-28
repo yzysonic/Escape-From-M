@@ -185,7 +185,7 @@ RectPolygon::RectPolygon(std::string texture_name, Layer layer, std::string rend
 
 	InitBuffer();
 	SetTexture(Texture::Get(texture_name));
-
+	SetSize(Vector2::one);
 }
 
 RectPolygon::~RectPolygon(void)
@@ -225,10 +225,6 @@ void RectPolygon::Draw(void)
 
 	// ワールドマトリクスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
-	// ビューマトリクスの設定
-	pDevice->SetTransform(D3DTS_VIEW, &camera->getViewMatrix(false));
-	// プロジェクションマトリクスの設定
-	pDevice->SetTransform(D3DTS_PROJECTION, &camera->getProjectionMatrix(false));
 
 	// 頂点バッファをデバイスのデータストリームにバインド
 	pDevice->SetStreamSource(0, this->pVtxBuff, 0, sizeof(Vertex3D));
@@ -288,17 +284,21 @@ void RectPolygon::SetTexture(Texture * texture)
 {
 
 	if (texture != Texture::none && texture->pDXTex == nullptr)
-	{
-		SetSize(100.0f*Vector2::one);
 		SetColor(Color(255, 0, 255, 255));
-	}
 	else
-	{
-		SetSize(texture->size);
 		SetColor(Color::white);
-	}
 
 	this->pTexture = texture;
+}
+
+void RectPolygon::LockBuff(Vertex3D ** pVtx)
+{
+	this->pVtxBuff->Lock(0, 0, (void**)pVtx, 0);
+}
+
+void RectPolygon::UnlockBuff(void)
+{
+	this->pVtxBuff->Unlock();
 }
 
 HRESULT RectPolygon::InitBuffer(void)
@@ -331,15 +331,15 @@ HRESULT RectPolygon::InitBuffer(void)
 
 	// 法線ベクトルの設定
 	pVtx[0].nor =
-		pVtx[1].nor =
-		pVtx[2].nor =
-		pVtx[3].nor = Vector3(0.0f, 0.0f, -1.0f);
+	pVtx[1].nor =
+	pVtx[2].nor =
+	pVtx[3].nor = Vector3(0.0f, 0.0f, -1.0f);
 
 	// 反射光の設定
 	pVtx[0].diffuse =
-		pVtx[1].diffuse =
-		pVtx[2].diffuse =
-		pVtx[3].diffuse = this->color;
+	pVtx[1].diffuse =
+	pVtx[2].diffuse =
+	pVtx[3].diffuse = this->color;
 
 	// テクスチャ座標の設定
 	pVtx[0].uv = Vector2(0.0f, 0.0f);

@@ -14,6 +14,12 @@
     <Filter Include="Script">
       <UniqueIdentifier>{4f42a833-4c00-492d-ac1d-7eae1589179f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Model">
+      <UniqueIdentifier>{eb8b23ec-a3c6-4931-a332-64a56c9b00c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{af8e5dc3-1011-4218-aad7-7ed72a852c52}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Core\System.cpp">
@@ -137,19 +143,32 @@
     <ClCompile Include="CameraPlay.cpp">
       <Filter>Script</Filter>
     </ClCompile>
-    <ClCompile Include="SceneMakotoTest.cpp">
-      <Filter>Scene</Filter>
+    <ClCompile Include="Core\AllocateHirerachy.cpp">
+      <Filter>Core\Model</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyNormal.cpp">
+    <ClCompile Include="Core\BoneFrame.cpp">
+      <Filter>Core\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\SkinnedModel.cpp">
+      <Filter>Core\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Core\StaticModel.cpp">
+      <Filter>Core\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBullet.cpp">
+    <ClCompile Include="CameraSmooth.cpp">
+      <Filter>Script</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="Shadow.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyRare.cpp">
+    <ClCompile Include="MagicSquare.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBig.cpp">
+    <ClCompile Include="Barrier.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
   </ItemGroup>
@@ -292,20 +311,43 @@
     <ClInclude Include="CameraPlay.h">
       <Filter>Script</Filter>
     </ClInclude>
-    <ClInclude Include="SceneMakotoTest.h">
-      <Filter>Scene</Filter>
+    <ClInclude Include="Core\AllocateHirerachy.h">
+      <Filter>Core\Model</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyNormal.h">
+    <ClInclude Include="Core\BoneFrame.h">
+      <Filter>Core\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\SkinnedModel.h">
+      <Filter>Core\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\StaticModel.h">
+      <Filter>Core\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBullet.h">
+    <ClInclude Include="CameraSmooth.h">
+      <Filter>Script</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Shadow.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyRare.h">
+    <ClInclude Include="MagicSquare.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyBig.h">
+    <ClInclude Include="Barrier.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shader\InstancingVS.hlsl">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BarrierPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

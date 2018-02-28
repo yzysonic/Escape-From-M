@@ -79,6 +79,8 @@ public:
 	void SetSize(Vector2 size);
 	void SetTexture(std::string texture_name);
 	void SetTexture(Texture* texture);
+	void LockBuff(Vertex3D** pVtx);
+	void UnlockBuff(void);
 
 protected:
 	LPDIRECT3DVERTEXBUFFER9 pVtxBuff;
