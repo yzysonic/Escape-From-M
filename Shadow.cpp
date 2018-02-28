@@ -2,7 +2,7 @@
 
 Shadow::Shadow(Object* target)
 {
-	AddComponent<RectPolygon>("shadow", Layer::MASK);
+	AddComponent<RectPolygon>("shadow", Layer::BG_02);
 	this->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
 	this->transform.position.y += 0.01f;
 	this->target = &target->transform;
@@ -24,7 +24,7 @@ void Shadow::OnDraw(void)
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
 
 	// ライトなし
-	//pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 }
 
@@ -38,6 +38,6 @@ void Shadow::AfterDraw(void)
 	pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	// ライトあり
-	//pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 }

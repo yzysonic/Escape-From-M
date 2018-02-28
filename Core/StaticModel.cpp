@@ -19,7 +19,7 @@
 //=============================================================================
 // 初期化処理
 //=============================================================================
-StaticModel::StaticModel(std::string model_name) : Drawable(Layer::DEFAULT, "default")
+StaticModel::StaticModel(std::string model_name, Layer layer) : Drawable(layer, "default")
 {
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetDevice();
 	std::string path;
@@ -97,9 +97,9 @@ void StaticModel::Draw(void)
 	// 現在のマテリアルを取得
 	pDevice->GetMaterial(&matDef);
 
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, this->alphaTestEnable);
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
+	//pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, this->alphaTestEnable);
+	//pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
+	//pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	// ワールドマトリクスの設定
 	this->object->transform.UpdateWorldMatrix();
@@ -123,7 +123,7 @@ void StaticModel::Draw(void)
 	//マテリアルを元に戻す
 	pDevice->SetMaterial(&matDef);
 
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
+	//pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 
 }
 

@@ -35,6 +35,7 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 	this->animationSet = NULL;
 	this->activeAnimation = 0;
 	this->alphaTestEnable = false;
+	this->anime_set_num = 0;
 
 	path = MODEL_PATH + model_name + ".x";
 
@@ -80,7 +81,8 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 	// アニメーターの設定
 	if (this->animator)
 	{
-		if (this->animator->GetMaxNumAnimationSets() > 1)
+		this->anime_set_num = this->animator->GetMaxNumAnimationSets();
+		if (this->anime_set_num > 1)
 		{
 			int n = this->animator->GetMaxNumAnimationSets();
 			this->animationSet = (LPD3DXANIMATIONSET*)malloc(sizeof(LPD3DXANIMATIONSET)*n);
@@ -166,6 +168,14 @@ void SkinnedModel::SetAnime(int n)
 {
 	this->animator->SetTrackAnimationSet(0, this->animationSet[n]);
 	this->animator->SetTrackPosition(0, 0);
+}
+
+float SkinnedModel::GetAnimePeriod(int n)
+{
+	if(n<this->anime_set_num)
+		return this->animationSet[n]->GetPeriod();
+	else 
+		return 0.0f;
 }
 
 

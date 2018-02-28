@@ -165,6 +165,12 @@
     <ClCompile Include="Shadow.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="MagicSquare.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Barrier.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -327,10 +333,21 @@
     <ClInclude Include="Shadow.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="MagicSquare.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Barrier.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">
       <Filter>Shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\BarrierPS.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

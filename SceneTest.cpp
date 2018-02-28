@@ -11,6 +11,9 @@ void SceneTest::Init(void)
 	Texture::LoadTexture("enemy");
 	Texture::LoadTexture("white_field", "white_field.jpg");
 	Texture::LoadTexture("shadow");
+	Texture::LoadTexture("magic_square");
+
+	PixelShader::Load("BarrierPS.hlsl");
 
 	// カメラ初期化
 	this->camera = new Camera;
@@ -25,16 +28,16 @@ void SceneTest::Init(void)
 
 	// 床初期化
 	this->field = new Object;
-	this->field->transform.scale = 400.0f*Vector3::one;
 	this->field->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
 
 	Vertex3D *pVtx;
-	this->field->AddComponent<RectPolygon>("white_field")->LockBuff(&pVtx);
+	this->field->AddComponent<RectPolygon>("white_field", Layer::BG_00)->LockBuff(&pVtx);
 	pVtx[0].uv = Vector2(0.0, 0.0f);
 	pVtx[1].uv = Vector2(300.0, 0.0f);
 	pVtx[2].uv = Vector2(0.0, 300.0f);
 	pVtx[3].uv = Vector2(300.0, 300.0f);
 	this->field->GetComponent<RectPolygon>()->UnlockBuff();
+	this->field->GetComponent<RectPolygon>()->SetSize(400.0f*Vector2::one);
 
 	// プレイヤー初期化
 	this->player = new Player;
@@ -55,15 +58,20 @@ void SceneTest::Init(void)
 	this->test_obj->transform.scale = 0.5f * Vector3::one;
 	this->test_obj->transform.position = Vector3(10.0f, 0.0f, 20.0f);
 
+	// 魔法陣初期化
+	this->magic_square = new MagicSquare;
+
+	// 結界初期化
+	this->barrier = new Barrier;
+
 	// ライティング
-	this->light_on = false;
-	Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	this->light_on = true;
+	//Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 void SceneTest::Update(void)
 {
-	this->test_obj->transform.rotate(0.f, 0.02f, 0.f);
-
+	this->test_obj->transform.rotate(0.0f, 0.02f, 0.f);
 
 	// カメラモードの切替
 	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f)
@@ -77,13 +85,13 @@ void SceneTest::Update(void)
 	}
 
 	// ライティングの切替
-	if (GetKeyboardTrigger(DIK_L))
-	{
-		if (this->light_on)
-			Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-		else
-			Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
-		this->light_on = !this->light_on;
-	}
+	//if (GetKeyboardTrigger(DIK_L))
+	//{
+	//	if (this->light_on)
+	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//	else
+	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//	this->light_on = !this->light_on;
+	//}
 	
 }

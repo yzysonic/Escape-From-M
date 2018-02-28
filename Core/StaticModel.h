@@ -21,7 +21,7 @@ public:
 	DWORD				numMaterial;	// ƒ}ƒeƒŠƒAƒ‹î•ñ‚Ì”
 	bool				alphaTestEnable;
 
-	StaticModel(std::string model_name);
+	StaticModel(std::string model_name, Layer layer = Layer::DEFAULT);
 	~StaticModel(void);
 	void Draw(void) override;
 	//void DrawModelWireFrame(StaticModel* _this);
