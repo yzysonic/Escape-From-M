@@ -181,9 +181,14 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="EnemyBig.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
+    <ClCompile Include="EnemyNormal.cpp" />
+    <ClCompile Include="EnemyRare.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
+    <ClCompile Include="SceneMakotoTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -230,8 +235,13 @@
     <ClInclude Include="Core\Transform.h" />
     <ClInclude Include="Core\Vector.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="EnemyBig.h" />
+    <ClInclude Include="EnemyBullet.h" />
+    <ClInclude Include="EnemyNormal.h" />
+    <ClInclude Include="EnemyRare.h" />
     <ClInclude Include="FadeScreen.h" />
     <ClInclude Include="SceneGlobal.h" />
+    <ClInclude Include="SceneMakotoTest.h" />
     <ClInclude Include="SceneTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

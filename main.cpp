@@ -11,7 +11,7 @@
 #include "SceneGlobal.h"
 
 #ifdef _DEBUG
-#include "SceneTest.h"
+#include "SceneMakotoTest.h"
 #endif
 
 // メモリリークの自動検出
@@ -53,7 +53,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #ifndef _DEBUG
 	GameManager::GetInstance()->SetScene(new SceneTitle);
 #else
-	GameManager::GetInstance()->SetScene(new SceneTest);
+	GameManager::GetInstance()->SetScene(new SceneMakotoTest);
 #endif
 
 	// ゲームループ
