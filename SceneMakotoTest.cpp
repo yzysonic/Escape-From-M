@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "SceneMakotoTest.h"
+#include "Player.h"
 
 void SceneMakotoTest::Init(void)
 {
@@ -14,6 +15,16 @@ void SceneMakotoTest::Init(void)
 	// ‚Ü‚¾“ü‚Á‚Ä‚È‚¢
 	Texture::LoadTexture("player");
 	Texture::LoadTexture("bullet01");
+
+	// ƒJƒƒ‰‰Šú‰»
+	this->camera = new Camera;
+	this->camera->setBackColor(Color(223, 223, 223, 255));
+	this->camera->near_z = 2.0f;
+	this->camera->far_z = 500.0f;
+	this->camera->fov = Deg2Rad(45.0f);
+	this->camera->transform.position = Vector3(0.0f, 10.0f, -30.0f);
+	Renderer::GetInstance()->setCamera(this->camera);
+
 
 
 	//test_obj = new Object;
@@ -29,9 +40,14 @@ void SceneMakotoTest::Init(void)
 	player = new EnemyNormal;
 	big = new EnemyBig;
 	bullet = new EnemyBullet;
+	new Player;
+
 
 	player->target = rare;
 	big->target = rare;
+
+	Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+
 }
 
 void SceneMakotoTest::Update(void)

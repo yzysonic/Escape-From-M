@@ -22,11 +22,11 @@ Player::~Player(void)
 void Player::Update(void)
 {
 	int anime_index = -1;
-	if (GetKeyboardPress(KeyAtkShort))
+	if (GetKeyboardTrigger(KeyAtkShort))
 		anime_index = (int)AnimeState::AttackShort;
-	if (GetKeyboardPress(KeyAtkLong))
+	if (GetKeyboardTrigger(KeyAtkLong))
 		anime_index = (int)AnimeState::AttackLong;
-	if (GetKeyboardPress(KeyAtkArea))
+	if (GetKeyboardTrigger(KeyAtkArea))
 		anime_index = (int)AnimeState::AttackArea;
 
 	if (anime_index >= 0)

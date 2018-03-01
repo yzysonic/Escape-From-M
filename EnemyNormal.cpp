@@ -4,25 +4,14 @@
 
 EnemyNormal::EnemyNormal(void)
 {
-	for (int i = 0;i < ENEMYNORMAL_MAX;i++)
-	{
-		this->AddComponent<RectPolygon>("player");
+	AddComponent<StaticModel>("enemy");
 
-		//RectPolygon* poly = this->GetComponent<RectPolygon>();
-
-		this->transform.setRotation(0.0f, 0.0f, 0.0f);
-		this->transform.position = Vector3(0.0f, 0.0f, 0.0f);
-		this->target = NULL;
-	}
+	this->transform.scale = 0.5f * Vector3::one;
+	this->target = NULL;
 }
 
 void EnemyNormal::Update(void)
 {
-	Vector3 EtoR;
-
-	EtoR = (target->transform.position - this->transform.position).normalized();
-	
-	this->transform.position += EtoR;
 
 	if (GetKeyboardTrigger(DIK_K))
 	{
@@ -31,6 +20,12 @@ void EnemyNormal::Update(void)
 
 	if (target != NULL)
 	{
+		Vector3 EtoR;
+
+		EtoR = (target->transform.position - this->transform.position).normalized();
+
+		this->transform.position += EtoR;
+
 		//PtoE = GetPositionModel() - this->transform.position;
 		//D3DXVec3Normalize(&PtoE, &PtoE);
 		//this->transform.position += PtoE;

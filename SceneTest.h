@@ -4,6 +4,7 @@
 #include "Shadow.h"
 #include "MagicSquare.h"
 #include "Barrier.h"
+#include "EnemyNormal.h"
 
 class SceneTest : public Scene
 {
@@ -19,6 +20,7 @@ private:
 	Barrier* barrier;
 	Object* field;
 	Object* test_obj;
+	EnemyNormal* enemy;
 	bool camera_play_mode;
 	bool light_on;
 };

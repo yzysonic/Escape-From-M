@@ -12,8 +12,14 @@ void SceneTest::Init(void)
 	Texture::LoadTexture("white_field", "white_field.jpg");
 	Texture::LoadTexture("shadow");
 	Texture::LoadTexture("magic_square");
+	Texture::LoadTexture("player");
+
 
 	PixelShader::Load("BarrierPS.hlsl");
+
+	// ライティング
+	this->light_on = true;
+	//Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// カメラ初期化
 	this->camera = new Camera;
@@ -21,7 +27,7 @@ void SceneTest::Init(void)
 	this->camera->near_z = 2.0f;
 	this->camera->far_z = 500.0f;
 	this->camera->fov = Deg2Rad(45.0f);
-	this->camera->transform.position = Vector3(0.0f, 10.0f, -30.0f);
+	this->camera->transform.position = Vector3(0.0f, 40.0f, -120.0f);
 	this->camera->AddComponent<CameraPlay>();
 	this->camera_play_mode = false;
 	Renderer::GetInstance()->setCamera(this->camera);
@@ -52,27 +58,21 @@ void SceneTest::Init(void)
 	};
 	this->camera->AddComponent<CameraSmooth>(this->player);
 
-	// エネミーテスト
-	this->test_obj = new Object;
-	this->test_obj->AddComponent<StaticModel>("enemy");
-	this->test_obj->transform.scale = 0.5f * Vector3::one;
-	this->test_obj->transform.position = Vector3(10.0f, 0.0f, 20.0f);
-
 	// 魔法陣初期化
 	this->magic_square = new MagicSquare;
 
 	// 結界初期化
 	this->barrier = new Barrier;
 
-	// ライティング
-	this->light_on = true;
-	//Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	// エネミー初期化
+	this->enemy = new EnemyNormal;
+	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
+	this->enemy->target = this->barrier;
+
 }
 
 void SceneTest::Update(void)
 {
-	this->test_obj->transform.rotate(0.0f, 0.02f, 0.f);
-
 	// カメラモードの切替
 	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f)
 	{

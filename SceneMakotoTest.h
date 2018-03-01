@@ -19,4 +19,5 @@ private:
 	EnemyBullet* bullet;
 	EnemyRare* rare;
 	EnemyBig* big;
+	Camera* camera;
 };
