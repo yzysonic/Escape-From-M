@@ -3,6 +3,7 @@
 #include "UIHP.h"
 
 #define ENEMYNORMAL_MAX (70)
+#define ENEMY_SPEED (0.1f)
 
 class EnemyNormal : public Object
 {

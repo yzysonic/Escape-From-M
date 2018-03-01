@@ -36,14 +36,14 @@ void Transform::setRotation(float x, float y, float z)
 
 }
 
-Vector3 Transform::getFront(void)
-{
-	return this->front;
-}
-
 Vector3 Transform::getUp(void)
 {
 	return this->up;
+}
+
+Vector3 Transform::getFront(void)
+{
+	return this->front;
 }
 
 void Transform::setUp(Vector3 up)
@@ -83,7 +83,7 @@ void Transform::lookAt(Vector3 const & target)
 {
 	Vector3 dis = target - this->position;
 
-	this->rotation.z = atan2f(dis.y, dis.x) - PI / 2.0f;
+	this->rotation.y = atan2f(-dis.z, dis.x) - PI / 2.0f;
 	this->updateVector();
 }
 
