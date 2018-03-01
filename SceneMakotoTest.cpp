@@ -5,16 +5,27 @@
 //
 //=============================================================================
 #include "SceneMakotoTest.h"
-#include "Player.h"
+#include "FadeScreen.h"
+#include "CameraPlay.h"
+#include "CameraSmooth.h"
 
 void SceneMakotoTest::Init(void)
 {
-	//Texture::LoadTexture("panti02");
-	//Texture::LoadTexture("Attack");
-
-	// まだ入ってない
+	Texture::LoadTexture("attack");
+	Texture::LoadTexture("body_sum", "body_sum.tga");
+	Texture::LoadTexture("misaki_head", "misaki_head.tga");
+	Texture::LoadTexture("enemy");
+	Texture::LoadTexture("white_field", "white_field.jpg");
+	Texture::LoadTexture("shadow");
+	Texture::LoadTexture("magic_square");
 	Texture::LoadTexture("player");
-	Texture::LoadTexture("bullet01");
+	Texture::LoadTexture("bullet_enemy");
+
+	PixelShader::Load("BarrierPS.hlsl");
+
+	// ライティング
+	this->light_on = true;
+	//Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	// カメラ初期化
 	this->camera = new Camera;
@@ -22,39 +33,76 @@ void SceneMakotoTest::Init(void)
 	this->camera->near_z = 2.0f;
 	this->camera->far_z = 500.0f;
 	this->camera->fov = Deg2Rad(45.0f);
-	this->camera->transform.position = Vector3(0.0f, 10.0f, -30.0f);
+	this->camera->transform.position = Vector3(0.0f, 40.0f, -120.0f);
+	this->camera->AddComponent<CameraPlay>();
+	this->camera_play_mode = false;
 	Renderer::GetInstance()->setCamera(this->camera);
 
+	// 床初期化
+	this->field = new Object;
+	this->field->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
 
+	Vertex3D *pVtx;
+	this->field->AddComponent<RectPolygon>("white_field", Layer::BG_00)->LockBuff(&pVtx);
+	pVtx[0].uv = Vector2(0.0, 0.0f);
+	pVtx[1].uv = Vector2(300.0, 0.0f);
+	pVtx[2].uv = Vector2(0.0, 300.0f);
+	pVtx[3].uv = Vector2(300.0, 300.0f);
+	this->field->GetComponent<RectPolygon>()->UnlockBuff();
+	this->field->GetComponent<RectPolygon>()->SetSize(400.0f*Vector2::one);
 
-	//test_obj = new Object;
-	//test_obj->AddComponent<RectPolygon>("panti02");
+	// プレイヤー初期化
+	this->player = new Player;
+	this->player->event_move += [&]
+	{
+		if (this->camera_play_mode)
+		{
+			this->camera->GetComponent<CameraPlay>()->SetActive(false);
+			this->camera->GetComponent<CameraSmooth>()->SetActive(true);
+			this->camera_play_mode = false;
+		}
+	};
+	this->camera->AddComponent<CameraSmooth>(this->player);
 
-	//test_obj1 = new Object;
-	//test_obj1->AddComponent<RectPolygon>("Attack", Layer::PLAYER);
+	// 魔法陣初期化
+	this->magic_square = new MagicSquare;
 
-	//test_obj2 = new Object;
-	//test_obj2->AddComponent<RectPolygon>("Attack");
+	// 結界初期化
+	this->barrier = new Barrier;
 
-	rare = new EnemyRare;
-	player = new EnemyNormal;
-	big = new EnemyBig;
-	bullet = new EnemyBullet;
-	new Player;
+	// エネミー初期化
+	this->enemy = new EnemyNormal;
+	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
+	this->enemy->target = this->barrier;
 
-
-	player->target = rare;
-	big->target = rare;
-
-	Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	// エネミーバレットの初期化
+	this->enemybullet = new EnemyBullet;
+	this->enemybullet->transform.position = enemy->transform.position;
+	this->enemybullet->target = this->barrier;
 
 }
 
 void SceneMakotoTest::Update(void)
 {
-	//test_obj1->transform.position.x += 10.0f * Time::DeltaTime();
-	//test_obj1->transform.rotate(0.0f, 0.0f, Deg2Rad(10.0f * Time::DeltaTime()));
+	// カメラモードの切替
+	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f)
+	{
+		if (!this->camera_play_mode)
+		{
+			this->camera->GetComponent<CameraSmooth>()->SetActive(false);
+			this->camera->GetComponent<CameraPlay>()->SetActive(true);
+			this->camera_play_mode = true;
+		}
+	}
 
-	//float scale = 1.0f + 0.3f* fabsf(sinf(Time::DeltaTime()*2*PI));
-	//test_obj1->transform.scale = Vector3(scale, scale, 0.0f);
+	// ライティングの切替
+	//if (GetKeyboardTrigger(DIK_L))
+	//{
+	//	if (this->light_on)
+	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	//	else
+	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
+	//	this->light_on = !this->light_on;
+	//}
+
 }

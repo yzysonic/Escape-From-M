@@ -13,7 +13,7 @@ void SceneTest::Init(void)
 	Texture::LoadTexture("shadow");
 	Texture::LoadTexture("magic_square");
 	Texture::LoadTexture("player");
-
+	Texture::LoadTexture("bullet_enemy");
 
 	PixelShader::Load("BarrierPS.hlsl");
 
@@ -68,6 +68,11 @@ void SceneTest::Init(void)
 	this->enemy = new EnemyNormal;
 	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
 	this->enemy->target = this->barrier;
+
+	// エネミーバレットの初期化
+	this->enemybullet = new EnemyBullet;
+	this->enemybullet->transform.position = enemy->transform.position;
+	this->enemybullet->target = this->barrier;
 
 }
 

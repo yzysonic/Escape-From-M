@@ -12,19 +12,33 @@ EnemyNormal::EnemyNormal(void)
 
 void EnemyNormal::Update(void)
 {
+	this->transform.lookAt(&target->transform);
 
 	if (GetKeyboardTrigger(DIK_K))
 	{
-		new EnemyBullet;
+		EnemyBullet* bullet = new EnemyBullet;
+
+		bullet->transform.position = this->transform.position;
+
+		//bullet->transform.setFront(this->transform.getFront());
 	}
 
 	if (target != NULL)
 	{
-		Vector3 EtoR;
+		Vector3 EtoM;
+		float length;
+		
+		EtoM = (target->transform.position - this->transform.position);
+		length = EtoM.length();
+		EtoM = EtoM.normalized();
 
-		EtoR = (target->transform.position - this->transform.position).normalized();
+		this->transform.position += EtoM * ENEMY_SPEED;
 
-		this->transform.position += EtoR;
+		if (length <= 10.0f)
+		{
+			this->transform.position -= EtoM * ENEMY_SPEED;
+
+		}
 
 		//PtoE = GetPositionModel() - this->transform.position;
 		//D3DXVec3Normalize(&PtoE, &PtoE);

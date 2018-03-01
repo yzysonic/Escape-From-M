@@ -41,6 +41,11 @@ Vector3 Transform::getUp(void)
 	return this->up;
 }
 
+Vector3 Transform::getFront(void)
+{
+	return this->front;
+}
+
 void Transform::setUp(Vector3 up)
 {
 	this->up = up.normalized();
@@ -78,7 +83,7 @@ void Transform::lookAt(Vector3 const & target)
 {
 	Vector3 dis = target - this->position;
 
-	this->rotation.z = atan2f(dis.y, dis.x) - PI / 2.0f;
+	this->rotation.y = atan2f(-dis.z, dis.x) - PI / 2.0f;
 	this->updateVector();
 }
 
@@ -105,4 +110,6 @@ void Transform::updateVector(void)
 {
 	this->up.x = cosf(rotation.z + PI / 2);
 	this->up.y = sinf(rotation.z + PI / 2);
+	this->front.x = cosf(rotation.y );
+	this->front.z = sinf(rotation.y );
 }
