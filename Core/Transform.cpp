@@ -36,6 +36,11 @@ void Transform::setRotation(float x, float y, float z)
 
 }
 
+Vector3 Transform::getFront(void)
+{
+	return this->front;
+}
+
 Vector3 Transform::getUp(void)
 {
 	return this->up;
@@ -105,4 +110,6 @@ void Transform::updateVector(void)
 {
 	this->up.x = cosf(rotation.z + PI / 2);
 	this->up.y = sinf(rotation.z + PI / 2);
+	this->front.x = cosf(rotation.y + 0.5f*PI);
+	this->front.z = -sinf(rotation.y + 0.5f*PI);
 }

@@ -13,6 +13,7 @@ void SceneTest::Init(void)
 	Texture::LoadTexture("shadow");
 	Texture::LoadTexture("magic_square");
 	Texture::LoadTexture("player");
+	Texture::LoadTexture("player_bullet");
 
 
 	PixelShader::Load("BarrierPS.hlsl");

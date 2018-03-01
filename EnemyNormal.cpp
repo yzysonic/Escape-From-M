@@ -5,9 +5,13 @@
 EnemyNormal::EnemyNormal(void)
 {
 	AddComponent<StaticModel>("enemy");
-
+	AddComponent<SphereCollider>()->radius = 2.0f;
+	this->type = ObjectType::Enemy;
 	this->transform.scale = 0.5f * Vector3::one;
 	this->target = NULL;
+	this->hp = MaxHP;
+	this->uihp = new UIHP(this, 7.0f);
+	this->uihp->SetOpacity(0.0f);
 }
 
 void EnemyNormal::Update(void)
@@ -30,4 +34,23 @@ void EnemyNormal::Update(void)
 		//D3DXVec3Normalize(&PtoE, &PtoE);
 		//this->transform.position += PtoE;
 	}
+}
+
+void EnemyNormal::OnCollision(Object * other)
+{
+	if (other->type == ObjectType::Bullet)
+	{
+		this->Damage(1);
+	}
+}
+
+void EnemyNormal::Damage(int point)
+{
+	if (this->hp == 0)
+		return;
+
+	this->uihp->SetOpacity(1.0f);
+
+	this->hp -= point;
+	this->uihp->SetPercent((float)this->hp / MaxHP);
 }

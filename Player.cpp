@@ -1,7 +1,10 @@
 #include "Player.h"
+#include "PlayerBulletShort.h"
 
 Player::Player(void)
 {
+	this->type = ObjectType::Player;
+
 	this->hp = MaxHp;
 	this->atk = 1;
 
@@ -21,29 +24,46 @@ Player::~Player(void)
 
 void Player::Update(void)
 {
-	int anime_index = -1;
-	if (GetKeyboardTrigger(KeyAtkShort))
-		anime_index = (int)AnimeState::AttackShort;
-	if (GetKeyboardTrigger(KeyAtkLong))
-		anime_index = (int)AnimeState::AttackLong;
-	if (GetKeyboardTrigger(KeyAtkArea))
-		anime_index = (int)AnimeState::AttackArea;
 
-	if (anime_index >= 0)
+	switch (this->anime_state)
 	{
-		this->model->SetAnime(anime_index);
-		this->anime_timer.Reset(this->model->GetAnimePeriod(anime_index));
+	case AnimeState::Idle:
+	case AnimeState::Running:
+		Move();
+		Attack();
+
+		break;
+
+	case AnimeState::AttackShort:
+		if (this->anime_timer.Elapsed() > 0.3f)
+			break;
+
+		if (this->bullet_timer.TimeUp())
+		{
+			AttackShort();
+			this->bullet_timer.Reset();
+		}
+		
+		break;
+
+	case AnimeState::AttackLong:
+
+		break;
+
+
 	}
+
 	
 	if (this->anime_timer.TimeUp())
 	{
 		this->model->SetAnime((int)AnimeState::Idle);
 		this->anime_timer.Reset(-1);
+		this->anime_state = AnimeState::Idle;
 	}
 
-	Move();
 
 	this->anime_timer++;
+	this->bullet_timer++;
 }
 
 void Player::AtkUp(void)
@@ -104,4 +124,47 @@ void Player::Move(void)
 	}
 
 
+}
+
+void Player::Attack(void)
+{
+	int anime_index = -1;
+	if (GetKeyboardTrigger(KeyAtkShort))
+	{
+		anime_index = (int)AnimeState::AttackShort;
+		this->anime_state = AnimeState::AttackShort;
+		this->bullet_timer.Reset(0.05f);
+	}
+	if (GetKeyboardTrigger(KeyAtkLong))
+	{
+		anime_index = (int)AnimeState::AttackLong;
+		this->anime_state = AnimeState::AttackLong;
+	}
+	if (GetKeyboardTrigger(KeyAtkArea))
+	{
+		anime_index = (int)AnimeState::AttackArea;
+		this->anime_state = AnimeState::AttackArea;
+	}
+
+	if (anime_index >= 0)
+	{
+		this->model->SetAnime(anime_index);
+		this->anime_timer.Reset(this->model->GetAnimePeriod(anime_index));
+	}
+
+}
+
+void Player::AttackShort(void)
+{
+	Transform t = this->transform;
+	t.rotate(0.0f, Deg2Rad(Lerpf(50.0f, -50.0f, this->anime_timer.Elapsed()/0.3f)), 0.0f);
+	t.position += t.getFront()*10.0f;
+	t.position.y += 3.0f;
+	//Vector3 pos = this->transform.getFront()*10.0f + this->transform.position;
+	//float angle = this->transform.getRotation().y + 0.5f*PI;
+	//pos.x = 10.0f*cosf(angle);
+	//pos.z = -10.0f*sinf(angle);
+	//pos.y = 5.0f;
+	//pos += this->transform.position;
+	new PlayerBulletShort(t.position);
 }

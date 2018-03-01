@@ -40,7 +40,10 @@ private:
 	Shadow* shadow;
 	Vector3 control;
 	FrameTimer anime_timer;
+	FrameTimer bullet_timer;
 	float speed;
 
 	void Move(void);
+	void Attack(void);
+	void AttackShort(void);
 };

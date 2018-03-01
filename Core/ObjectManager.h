@@ -13,6 +13,7 @@ public:
 	static void Destroy(void);
 	static void Update(void);
 	static void KillObject(void);
+	static Object* GetObjectByType(ObjectType type);
 
 private:
 	std::vector<std::unique_ptr<Object>> objectList;

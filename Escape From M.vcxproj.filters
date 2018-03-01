@@ -186,6 +186,12 @@
     <ClCompile Include="SceneMakotoTest.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerBulletShort.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UIHP.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -368,6 +374,12 @@
     </ClInclude>
     <ClInclude Include="SceneMakotoTest.h">
       <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBulletShort.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UIHP.h">
+      <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,8 @@ void Billboard::Draw(void)
 	D3DXMATRIX mtxWorld, mtxScl, mtxRot, mtxTranslate, mtxView;
 	auto pDevice = Direct3D::GetDevice();
 	auto camera = Renderer::GetInstance()->getCamera();
+
+	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 	
 	mtxView = camera->getViewMatrix(false);
 	mtxView._41 =
@@ -33,10 +35,10 @@ void Billboard::Draw(void)
 
 	// ワールドマトリクスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
-	// ビューマトリクスの設定
-	pDevice->SetTransform(D3DTS_VIEW, &camera->getViewMatrix(false));
-	// プロジェクションマトリクスの設定
-	pDevice->SetTransform(D3DTS_PROJECTION, &camera->getProjectionMatrix(false));
+	//// ビューマトリクスの設定
+	//pDevice->SetTransform(D3DTS_VIEW, &camera->getViewMatrix(false));
+	//// プロジェクションマトリクスの設定
+	//pDevice->SetTransform(D3DTS_PROJECTION, &camera->getProjectionMatrix(false));
 
 	// 頂点バッファをデバイスのデータストリームにバインド
 	pDevice->SetStreamSource(0, this->pVtxBuff, 0, sizeof(Vertex3D));
@@ -47,4 +49,5 @@ void Billboard::Draw(void)
 	// ポリゴンの描画
 	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, RECT_NUM_POLYGON);
 
+	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }

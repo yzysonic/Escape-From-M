@@ -37,6 +37,17 @@ void ObjectManager::KillObject(void)
 	m_pInstance->killList.clear();
 }
 
+Object * ObjectManager::GetObjectByType(ObjectType type)
+{
+	for (auto &obj : m_pInstance->objectList)
+	{
+		if (obj->type == type)
+			return obj.get();
+	}
+
+	return nullptr;
+}
+
 void * ObjectManager::NewObject(std::size_t size)
 {
 	Object* new_obj = (Object*)malloc(size);
