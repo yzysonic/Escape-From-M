@@ -71,7 +71,8 @@ void SceneMakotoTest::Init(void)
 	this->barrier = new Barrier;
 
 	// エネミー初期化
-	this->enemy = new EnemyNormal;
+	Transform t;
+	this->enemy = new EnemyNormal(t);
 	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
 	this->enemy->target = this->barrier;
 

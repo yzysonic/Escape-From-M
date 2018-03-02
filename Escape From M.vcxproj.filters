@@ -192,6 +192,12 @@
     <ClCompile Include="UIHP.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyManager.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -379,6 +385,12 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="UIHP.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManager.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>

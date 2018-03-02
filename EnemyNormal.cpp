@@ -2,16 +2,13 @@
 #include "EnemyRare.h"
 #include "EnemyBullet.h"
 
-EnemyNormal::EnemyNormal(void)
+EnemyNormal::EnemyNormal(Transform transform) : Enemy(transform)
 {
-	AddComponent<StaticModel>("enemy");
-	AddComponent<SphereCollider>()->radius = 3.0f;
-	this->type = ObjectType::Enemy;
+	this->collider->radius = 3.0f;
 	this->transform.scale = 0.5f * Vector3::one;
-	this->target = NULL;
+	this->speed = ENEMY_SPEED;
 	this->hp = MaxHP;
-	this->uihp = new UIHP(this, 15.0f);
-	//this->uihp->SetOpacity(0.0f);
+	this->max_hp = MaxHP;
 }
 
 void EnemyNormal::Update(void)
@@ -23,31 +20,12 @@ void EnemyNormal::Update(void)
 		EnemyBullet* bullet = new EnemyBullet;
 
 		bullet->transform.position = this->transform.position;
-
+		bullet->target = this->target;
 		//bullet->transform.setFront(this->transform.getFront());
 	}
+	
+	Move();
 
-	if (target != NULL)
-	{
-		Vector3 EtoM;
-		float length;
-		
-		EtoM = (target->transform.position - this->transform.position);
-		length = EtoM.length();
-		EtoM = EtoM.normalized();
-
-		this->transform.position += EtoM * ENEMY_SPEED;
-
-		if (length <= 10.0f)
-		{
-			this->transform.position -= EtoM * ENEMY_SPEED;
-
-		}
-
-		//PtoE = GetPositionModel() - this->transform.position;
-		//D3DXVec3Normalize(&PtoE, &PtoE);
-		//this->transform.position += PtoE;
-	}
 }
 
 void EnemyNormal::OnCollision(Object * other)
@@ -56,15 +34,4 @@ void EnemyNormal::OnCollision(Object * other)
 	{
 		this->Damage(1);
 	}
-}
-
-void EnemyNormal::Damage(int point)
-{
-	if (this->hp == 0)
-		return;
-
-	this->uihp->SetOpacity(1.0f);
-
-	this->hp -= point;
-	this->uihp->SetPercent((float)this->hp / MaxHP);
 }

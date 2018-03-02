@@ -18,6 +18,6 @@ void EnemyBullet::Update(void)
 
 		BtoM = (target->transform.position - this->transform.position).normalized();
 
-		//this->transform.position += BtoM * ENEMYBULLET_SPEED;
+		this->transform.position += BtoM * ENEMYBULLET_SPEED;
 	}
 }
