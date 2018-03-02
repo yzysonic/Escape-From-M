@@ -89,7 +89,7 @@ void Player::Move(void)
 		control = control.normalized();
 
 	// ƒpƒbƒh“ü—Í
-	control += Vector3(GetPadLX(), -GetPadLY(), 0);
+	control += Vector3(GetPadLX(), 0, -GetPadLY());
 
 	// ˆÚ“®ˆ—
 	if (control.sqrLength() > 0.0f)
@@ -129,18 +129,18 @@ void Player::Move(void)
 void Player::Attack(void)
 {
 	int anime_index = -1;
-	if (GetKeyboardTrigger(KeyAtkShort))
+	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort))
 	{
 		anime_index = (int)AnimeState::AttackShort;
 		this->anime_state = AnimeState::AttackShort;
-		this->bullet_timer.Reset(0.05f);
+		this->bullet_timer.Reset(0.03f);
 	}
-	if (GetKeyboardTrigger(KeyAtkLong))
+	if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
 	{
 		anime_index = (int)AnimeState::AttackLong;
 		this->anime_state = AnimeState::AttackLong;
 	}
-	if (GetKeyboardTrigger(KeyAtkArea))
+	if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
 	{
 		anime_index = (int)AnimeState::AttackArea;
 		this->anime_state = AnimeState::AttackArea;
@@ -158,13 +158,7 @@ void Player::AttackShort(void)
 {
 	Transform t = this->transform;
 	t.rotate(0.0f, Deg2Rad(Lerpf(50.0f, -50.0f, this->anime_timer.Elapsed()/0.3f)), 0.0f);
-	t.position += t.getFront()*10.0f;
+	t.position += t.getFront()*5.0f;
 	t.position.y += 3.0f;
-	//Vector3 pos = this->transform.getFront()*10.0f + this->transform.position;
-	//float angle = this->transform.getRotation().y + 0.5f*PI;
-	//pos.x = 10.0f*cosf(angle);
-	//pos.z = -10.0f*sinf(angle);
-	//pos.y = 5.0f;
-	//pos += this->transform.position;
-	new PlayerBulletShort(t.position);
+	new PlayerBulletShort(t, 0.3f-this->anime_timer.Elapsed());
 }

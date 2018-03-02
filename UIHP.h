@@ -7,8 +7,8 @@
 class UIHP : public Object
 {
 public:
-	static constexpr float Width = 7.0f;
-	static constexpr float Height = 0.5f;
+	static constexpr float Width = 40.0f;
+	static constexpr float Height = 3.0f;
 	float offset_y;
 
 	UIHP(Object* owner, float offset_y);
@@ -19,7 +19,7 @@ public:
 private:
 	Transform* owner;
 	Object* obj_main_bar;
-	Billboard* base_bar;
-	Billboard* main_bar;
+	RectPolygon2D* base_bar;
+	RectPolygon2D* main_bar;
 	float main_bar_offset_x;
 };

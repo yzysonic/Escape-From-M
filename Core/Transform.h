@@ -16,7 +16,6 @@ public:
 	Vector3 getRotation(void) const;
 	void setRotation(Vector3 rotation);
 	void setRotation(float x, float y, float z);
-	Vector3 getFront(void);
 	Vector3 getUp(void);
 	Vector3 getFront(void);
 	void setUp(Vector3 up);

@@ -23,8 +23,8 @@ void Billboard::Draw(void)
 	D3DXMatrixScaling(&mtxScl, this->object->transform.scale.x, this->object->transform.scale.y, this->object->transform.scale.z);
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxScl);
 	// 回転を反映
-	D3DXMatrixRotationYawPitchRoll(&mtxRot, this->object->transform.getRotation().y, this->object->transform.getRotation().x, this->object->transform.getRotation().z);
-	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
+	//D3DXMatrixRotationYawPitchRoll(&mtxRot, this->object->transform.getRotation().y, this->object->transform.getRotation().x, this->object->transform.getRotation().z);
+	//D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxRot);
 
 	// カメラの回転の逆操作
 	D3DXMatrixMultiply(&mtxWorld, &mtxWorld, &mtxView);
@@ -35,10 +35,6 @@ void Billboard::Draw(void)
 
 	// ワールドマトリクスの設定
 	pDevice->SetTransform(D3DTS_WORLD, &mtxWorld);
-	//// ビューマトリクスの設定
-	//pDevice->SetTransform(D3DTS_VIEW, &camera->getViewMatrix(false));
-	//// プロジェクションマトリクスの設定
-	//pDevice->SetTransform(D3DTS_PROJECTION, &camera->getProjectionMatrix(false));
 
 	// 頂点バッファをデバイスのデータストリームにバインド
 	pDevice->SetStreamSource(0, this->pVtxBuff, 0, sizeof(Vertex3D));

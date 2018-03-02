@@ -99,7 +99,15 @@ void CameraPlay::MoveCamera(void)
 	// ÉYÅ[ÉÄ
 	if(IsButtonPressed(0, BUTTON_L1))
 		target_dis += GetPadRY()*10.0f;
+
+	if (target_dis < 30.0f)
+		target_dis = 30.f;
+	if (target_dis > 100.0f)
+		target_dis = 100.0f;
+
 	dis = dis + (target_dis - dis)*0.15f;
+
+
 
 	if (move_phi != 0.0f)
 	{
@@ -112,6 +120,12 @@ void CameraPlay::MoveCamera(void)
 	if (move_theta != 0.0f)
 	{
 		theta += move_theta;
+
+		if (theta < Deg2Rad(30.0f))
+			theta = Deg2Rad(30.0f);
+		if (theta > Deg2Rad(85.0f))
+			theta = Deg2Rad(85.0f);
+
 		if (fabsf(move_theta) >= 0.001f)
 			move_theta *= 0.92f;
 		else
@@ -128,6 +142,5 @@ void CameraPlay::MoveCamera(void)
 
 		camera->at += move;
 	}
-
 
 }

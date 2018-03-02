@@ -4,7 +4,7 @@ FadeScreen::FadeScreen(void)
 {
 	this->AddComponent<RectPolygon2D>("none", Layer::TOP);
 
-	this->GetComponent<RectPolygon2D>()->setSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
+	this->GetComponent<RectPolygon2D>()->SetSize((float)SystemParameters::ResolutionX, (float)SystemParameters::ResolutionY);
 	this->GetComponent<RectPolygon2D>()->SetOpacity(0.0f);
 
 	state = Stop;

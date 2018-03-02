@@ -43,7 +43,7 @@ Vector2 RectPolygon2D::getSize(void)
 }
 
 
-void RectPolygon2D::setSize(float x, float y)
+void RectPolygon2D::SetSize(float x, float y)
 {
 	this->size = Vector2(x, y);
 	this->radius = this->size.length()/2;

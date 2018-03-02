@@ -5,6 +5,9 @@
 #define KeyAtkShort	DIK_J
 #define KeyAtkLong	DIK_K
 #define KeyAtkArea	DIK_L
+#define BtnAtkShort	BUTTON_SQ
+#define BtnAtkLong	BUTTON_TR
+#define BtnAtkArea	BUTTON_CR
 
 class Player : public Object
 {

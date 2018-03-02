@@ -5,13 +5,13 @@
 EnemyNormal::EnemyNormal(void)
 {
 	AddComponent<StaticModel>("enemy");
-	AddComponent<SphereCollider>()->radius = 2.0f;
+	AddComponent<SphereCollider>()->radius = 3.0f;
 	this->type = ObjectType::Enemy;
 	this->transform.scale = 0.5f * Vector3::one;
 	this->target = NULL;
 	this->hp = MaxHP;
-	this->uihp = new UIHP(this, 7.0f);
-	this->uihp->SetOpacity(0.0f);
+	this->uihp = new UIHP(this, 15.0f);
+	//this->uihp->SetOpacity(0.0f);
 }
 
 void EnemyNormal::Update(void)

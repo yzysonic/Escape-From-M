@@ -75,7 +75,8 @@ void SceneTest::Init(void)
 void SceneTest::Update(void)
 {
 	// カメラモードの切替
-	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f)
+	Vector2 pad_input_r(GetPadRX(), GetPadRY());
+	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f || pad_input_r.sqrLength() >= 0.01f)
 	{
 		if (!this->camera_play_mode)
 		{
@@ -84,15 +85,5 @@ void SceneTest::Update(void)
 			this->camera_play_mode = true;
 		}
 	}
-
-	// ライティングの切替
-	//if (GetKeyboardTrigger(DIK_L))
-	//{
-	//	if (this->light_on)
-	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//	else
-	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
-	//	this->light_on = !this->light_on;
-	//}
 	
 }

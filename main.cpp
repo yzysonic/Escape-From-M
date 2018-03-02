@@ -29,7 +29,6 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF); // メモリリーク自動検出
-	SystemParameters::FPS = 70;
 #endif
 
 	// タイトル
@@ -54,7 +53,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #ifndef _DEBUG
 	GameManager::GetInstance()->SetScene(new SceneTitle);
 #else
-	GameManager::GetInstance()->SetScene(new SceneMakotoTest);
+	GameManager::GetInstance()->SetScene(new SceneTest);
 #endif
 
 	// ゲームループ

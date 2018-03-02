@@ -52,7 +52,7 @@ public:
 	void Draw(void) override;
 	void SetColor(Color color);
 	Vector2 getSize(void);
-	void setSize(float x, float y);
+	void SetSize(float x, float y);
 	void setPattern(unsigned int pattern);
 	void SetTexture(std::string texture_name);
 	void SetTexture(Texture* texture);
