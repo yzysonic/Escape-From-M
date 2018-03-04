@@ -1,12 +1,15 @@
 #pragma once
 #include "Core/Core.h"
+#include "Enemy.h"
 
-class EnemyBig : public Object
+#define ENEMYBIG_SPEED 5.0f;
+
+class EnemyBig : public Enemy
 {
 public:
-	Object* target;
+	static const int MaxHP = 10;
 
+	FrameTimer timer;
 	EnemyBig(void);
-	void Update(void) override;
-
+	void OnCollision(Object* other) override;
 };

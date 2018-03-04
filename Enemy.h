@@ -18,9 +18,11 @@ public:
 	Event event_death;
 
 	Enemy(void);
+	virtual void Update(void) override;
 	void Move(void);
 	void Damage(int point);
 	void SetScale(float value);
+	void Shoot(void);
 
 protected:
 	int hp;

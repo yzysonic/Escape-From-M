@@ -1,16 +1,14 @@
 #include "EnemyRare.h"
-
-int flag = false;
+#include "EnemyBullet.h"
 
 EnemyRare::EnemyRare(void)
 {
-	this->AddComponent<RectPolygon>("player");
-
-	RectPolygon* poly = this->GetComponent<RectPolygon>();
-	poly->SetColor(Color(255, 0, 0, 255));
-
-	this->transform.setRotation(0.0f, 0.0f, 0.0f);
-	this->transform.position = Vector3(300.0f, 0.0f, 200.0f);
+	this->model = AddComponent<StaticModel>("enemy_rear");
+	this->transform.scale = 0.5f * Vector3::one;
+	this->collider->radius = 3.0f;
+	this->hp = MaxHP;
+	this->max_hp = MaxHP;
+	this->flag = false;
 
 	this->target = NULL;
 	this->timer.Reset(3.0f);
@@ -18,32 +16,56 @@ EnemyRare::EnemyRare(void)
 
 void EnemyRare::Update(void)
 {
-	if (flag == false)
+	switch (state)
 	{
-		this->transform.position.x += 10.0f*Time::DeltaTime();
-
-		if (this->timer.TimeUp())
+	case State::Move:
+		if (flag == false)
 		{
-			flag = true;
-			this->timer.Reset();
+			this->transform.position.x += 10.0f*Time::DeltaTime();
+
+			if (this->timer.TimeUp())
+			{
+				flag = true;
+				this->timer.Reset();
+			}
 		}
+
+		if (flag == true)
+		{
+			this->transform.position.x -= 10.0f*Time::DeltaTime();
+
+			if (this->timer.TimeUp())
+			{
+				flag = false;
+				this->timer.Reset();
+			}
+		}
+		break;
+
+	case State::Shoot:
+		Move();
+		Shoot();
+		break;
+
+	case State::FadeOut:
+		if (!timer.TimeUp())
+			FadeOut();
+		else
+		{
+			this->Destroy();
+			this->uihp->Destroy();
+		}
+		break;
 	}
 
-	if (flag == true)
-	{
-		this->transform.position.x -= 10.0f*Time::DeltaTime();
-
-		if (this->timer.TimeUp())
-		{
-			flag = false;
-			this->timer.Reset();
-		}
-	}
-
-	this->timer++;
+	timer++;
 }
 
-//D3DXVECTOR3 EnemyRare::GetPositionEnemyRare(void)
-//{
-//	return this->transform.position;
-//}
+void EnemyRare::OnCollision(Object * other)
+{
+	if (other->type == ObjectType::Bullet)
+	{
+		this->state = State::Shoot;
+		this->Damage(1);
+	}
+}

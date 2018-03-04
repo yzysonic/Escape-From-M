@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "EnemyBullet.h"
 
 Enemy::Enemy(void)
 {
@@ -24,6 +25,41 @@ Enemy::Enemy(void)
 	};
 
 	SetScale(1.0f);
+
+}
+
+void Enemy::Update(void)
+{
+	switch (state)
+	{
+	case State::Move:
+		Move();
+		if (IsInShootRange())
+		{
+			timer.Reset(0.7f);
+			state = State::Shoot;
+		}
+		break;
+
+	case State::Shoot:
+		if (IsInShootRange())
+			Shoot();
+		else
+			state = State::Move;
+		break;
+
+	case State::FadeOut:
+		if (!timer.TimeUp())
+			FadeOut();
+		else
+		{
+			this->Destroy();
+			this->uihp->Destroy();
+		}
+		break;
+	}
+
+	timer++;
 
 }
 
@@ -65,6 +101,19 @@ void Enemy::SetScale(float value)
 {
 	this->transform.scale = value * Vector3::one;
 	this->collider->radius = value * 0.5f;
+}
+
+void Enemy::Shoot(void)
+{
+	if (timer.TimeUp())
+	{
+		EnemyBullet* bullet = new EnemyBullet;
+
+		bullet->transform.position = this->transform.position;
+		bullet->transform.setFront(this->transform.getFront());
+
+		timer.Reset();
+	}
 }
 
 bool Enemy::IsInShootRange(void)

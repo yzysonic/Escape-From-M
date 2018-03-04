@@ -20,6 +20,7 @@ void SceneMakotoTest::Init(void)
 	Texture::LoadTexture("magic_square");
 	Texture::LoadTexture("player");
 	Texture::LoadTexture("bullet_enemy");
+	Texture::LoadTexture("bullet_player");
 
 	PixelShader::Load("BarrierPS.hlsl");
 
@@ -71,13 +72,20 @@ void SceneMakotoTest::Init(void)
 	this->barrier = new Barrier;
 
 	// エネミー初期化
+	Transform t;
 	this->enemy = new EnemyNormal;
 	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
 	this->enemy->target = this->barrier;
 
-	// エネミーバレットの初期化
-	this->enemybullet = new EnemyBullet;
-	this->enemybullet->transform.position = enemy->transform.position;
+	// エネミーレア初期化
+	this->enemyr = new EnemyRare;
+	this->enemyr->transform.position = Vector3(0.0f, 0.0f, -50);
+	this->enemyr->target = this->player;
+
+	// エネミービッグ初期化
+	this->enemyb = new EnemyBig;
+	this->enemyb->transform.position = Vector3(-50.0f, 0.0f, 0.0f);
+	this->enemyb->target = this->barrier;
 
 }
 

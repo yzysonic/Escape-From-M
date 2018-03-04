@@ -70,6 +70,7 @@ void SceneTest::Init(void)
 	this->enemy_manager = new EnemyManager;
 	this->enemy_manager->target1 = this->barrier;
 	this->enemy_manager->target2 = this->magic_square;
+	this->enemy_manager->target3 = this->player;
 
 	this->enemy = new EnemyNormal;
 	this->enemy->transform.position = Vector3(50.0f, 0.0f, 50.0f);
@@ -91,6 +92,9 @@ void SceneTest::Update(void)
 	}
 
 	if (GetKeyboardTrigger(DIK_E))
+	{
 		this->enemy_manager->SwapNormal();
+		this->enemy_manager->SwapRear();
+	}
 	
 }

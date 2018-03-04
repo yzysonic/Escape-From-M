@@ -6,6 +6,7 @@ EnemyManager::EnemyManager(void)
 	this->enemy_count = 0;
 	this->target1 = nullptr;
 	this->target2 = nullptr;
+	this->target3 = nullptr;
 	this->target_now = nullptr;
 }
 
@@ -27,7 +28,7 @@ void EnemyManager::Update(void)
 					this->target_now = nullptr;
 			}
 		}
-		//SwapRear();
+		SwapRear();
 		SwapNormal();
 		this->swap_timer.Reset();
 	}
@@ -51,5 +52,10 @@ void EnemyManager::SwapRear(void)
 	if (Randomf(0.0f, 1.0f) > RearProb)
 		return;
 
-	new EnemyRare;
+	float angle = Randomf(0.0f, 2.0f*PI);
+	auto enemy = new EnemyRare;
+	enemy->target = this->target3;
+	enemy->transform.position.x = SwapRadius * cosf(angle);
+	enemy->transform.position.z = SwapRadius * sinf(angle);
+
 }

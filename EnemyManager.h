@@ -12,10 +12,11 @@ public:
 	static constexpr float	SwapInterval = 5.0f;
 	static constexpr int	SwapNormalNum = 3;
 	static constexpr int	EnemyMax = 15;
-	static constexpr float	RearProb = 0.2f;
+	static constexpr float	RearProb = 0.3f;
 
 	EnemyTarget* target1;
 	EnemyTarget* target2;
+	EnemyTarget* target3;
 
 	EnemyManager(void);
 	void Update(void) override;
