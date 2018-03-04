@@ -82,7 +82,10 @@ bool Object::GetActive(void)
 void Object::Destroy(void)
 {
 	if (this->kill_flag == false)
+	{
+		this->SetActive(false);
 		ObjectManager::GetInstance()->AddKill(this);
+	}
 }
 
 

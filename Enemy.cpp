@@ -1,6 +1,6 @@
 #include "Enemy.h"
 
-Enemy::Enemy(Transform transform)
+Enemy::Enemy(void)
 {
 	this->transform.position = transform.position;
 	this->transform.setRotation(transform.getRotation());
@@ -13,7 +13,16 @@ Enemy::Enemy(Transform transform)
 	this->max_hp = 1;
 	this->speed = 1.0f;
 	this->uihp = new UIHP(this, 15.0f);
-	//this->uihp->SetOpacity(0.0f);
+	this->shoot_distance = 0.0f;
+	this->uihp->SetOpacity(0.0f);
+	this->state = State::Move;
+
+	this->event_death += [&] {
+		timer.Reset(1.0f);
+		this->collider->SetActive(false);
+		this->state = State::FadeOut;
+	};
+
 	SetScale(1.0f);
 
 }
@@ -25,16 +34,14 @@ void Enemy::Move(void)
 		Vector3 EtoM;
 		float length;
 
-		EtoM = (target->transform.position - this->transform.position);
+		EtoM = (target->GetAtkPos(this) - this->transform.position);
 		length = EtoM.length();
 
-		if (length <= 10.0f)
-			return;
+		this->transform.lookAt(&target->transform);
 
 		EtoM = EtoM.normalized();
 
 		this->transform.position += EtoM * speed * Time::DeltaTime();
-
 	}
 
 }
@@ -49,10 +56,31 @@ void Enemy::Damage(int point)
 	this->hp -= point;
 	this->uihp->SetPercent((float)this->hp / max_hp);
 
+	if (this->hp == 0)
+		this->event_death();
+
 }
 
 void Enemy::SetScale(float value)
 {
 	this->transform.scale = value * Vector3::one;
 	this->collider->radius = value * 0.5f;
+}
+
+bool Enemy::IsInShootRange(void)
+{
+	if (this->target == nullptr)
+		return false;
+
+	return (this->transform.position - this->target->GetAtkPos(this)).sqrLength() <= this->shoot_distance*this->shoot_distance;
+}
+
+void Enemy::FadeOut(void)
+{
+	float opacity = 1.0f - timer.Progress();
+	for (int i = 0; i < this->model->numMaterial; i++)
+	{
+		this->model->pMaterials[i].MatD3D.Diffuse.a = opacity;
+		this->uihp->SetOpacity(opacity);
+	}
 }

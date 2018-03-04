@@ -3,6 +3,7 @@
 Barrier::Barrier(void)
 {
 	AddComponent<StaticModel>("barrier", Layer::MASK);
+	this->hp = MaxHP;
 }
 
 void Barrier::OnDraw(void)
@@ -15,4 +16,14 @@ void Barrier::OnDraw(void)
 void Barrier::AfterDraw(void)
 {
 	//Direct3D::GetDevice()->SetPixelShader(NULL);
+}
+
+int Barrier::GetHp(void)
+{
+	return this->hp;
+}
+
+Vector3 Barrier::GetAtkPos(Object* enemy)
+{
+	return Radius*(enemy->transform.position - this->transform.position).normalized() + this->transform.position;
 }

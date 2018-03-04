@@ -2,7 +2,7 @@
 
 PlayerBulletShort::PlayerBulletShort(Transform transform, float wait_time)
 {
-	this->billboard = AddComponent<Billboard>("player_bullet");
+	this->billboard = AddComponent<Billboard>("bullet_player");
 	this->collider = AddComponent<SphereCollider>();
 	this->collider->radius = 0.5f*InitSize;
 

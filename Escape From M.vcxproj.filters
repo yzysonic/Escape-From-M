@@ -393,6 +393,9 @@
     <ClInclude Include="Enemy.h">
       <Filter>GameObject</Filter>
     </ClInclude>
+    <ClInclude Include="EnemyTarget.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shader\InstancingVS.hlsl">

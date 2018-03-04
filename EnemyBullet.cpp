@@ -4,20 +4,16 @@ Vector3 BulletSpeed; // ‘¬‚³
 
 EnemyBullet::EnemyBullet(void)
 {
-	this->AddComponent<RectPolygon>("bullet_enemy");
-
+	this->AddComponent<Billboard>("bullet_enemy");
 	this->transform.scale = 2.0f * Vector3::one;
-	this->target = NULL;
+	this->timer.Reset(2.0f);
 }
 
-void EnemyBullet::Update(void)
+void EnemyBullet::Update(void) 
 {
-	if (target != NULL)
-	{
-		Vector3 BtoM;
+	if (this->timer.TimeUp())
+		this->Destroy();
 
-		BtoM = (target->transform.position - this->transform.position).normalized();
-
-		this->transform.position += BtoM * ENEMYBULLET_SPEED;
-	}
+	this->transform.position += this->transform.getFront() * ENEMYBULLET_SPEED;
+	this->timer++;
 }

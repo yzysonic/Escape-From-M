@@ -8,6 +8,7 @@ MagicSquare::MagicSquare(void)
 
 	this->rotation_speed = 0.01f;
 	this->color_change_speed = 1.0f;
+	this->hp = MaxHP;
 }
 
 void MagicSquare::Update(void)
@@ -46,4 +47,14 @@ void MagicSquare::AfterDraw(void)
 	// ƒ‰ƒCƒg‚ ‚è
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
+}
+
+int MagicSquare::GetHp(void)
+{
+	return this->hp;
+}
+
+Vector3 MagicSquare::GetAtkPos(Object * enemy)
+{
+	return Radius*(enemy->transform.position - this->transform.position).normalized() + this->transform.position;
 }

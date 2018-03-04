@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Core.h"
 #include "Shadow.h"
+#include "EnemyTarget.h"
 
 #define KeyAtkShort	DIK_J
 #define KeyAtkLong	DIK_K
@@ -9,7 +10,7 @@
 #define BtnAtkLong	BUTTON_TR
 #define BtnAtkArea	BUTTON_CR
 
-class Player : public Object
+class Player : public EnemyTarget
 {
 public:
 	static constexpr int MaxHp = 20;
@@ -33,7 +34,8 @@ public:
 	Player(void);
 	~Player(void);
 	void Update(void) override;
-
+	int GetHp(void) override;
+	Vector3 GetAtkPos(Object* enemy) override;
 	// プレイヤーのATK値を1単位上げる、MAXになるとそれ以上増えない。
 	void AtkUp(void);
 

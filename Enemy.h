@@ -1,13 +1,23 @@
 #pragma once
 #include "Core/Core.h"
 #include "UIHP.h"
+#include "EnemyTarget.h"
 
 class Enemy : public Object
 {
 public:
-	Object* target;
+	enum class State
+	{
+		Move,
+		Shoot,
+		FadeOut
+	} state;
 
-	Enemy(Transform transform);
+	EnemyTarget* target;
+	float shoot_distance;
+	Event event_death;
+
+	Enemy(void);
 	void Move(void);
 	void Damage(int point);
 	void SetScale(float value);
@@ -19,5 +29,9 @@ protected:
 	UIHP* uihp;
 	StaticModel* model;
 	SphereCollider* collider;
+	FrameTimer timer;
+
+	bool IsInShootRange(void);
+	void FadeOut(void);
 
 };

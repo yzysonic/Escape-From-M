@@ -66,6 +66,16 @@ void Player::Update(void)
 	this->bullet_timer++;
 }
 
+int Player::GetHp(void)
+{
+	return this->hp;
+}
+
+Vector3 Player::GetAtkPos(Object * enemy)
+{
+	return this->transform.position;
+}
+
 void Player::AtkUp(void)
 {
 	this->atk = min(this->atk + 1, MaxAtk);

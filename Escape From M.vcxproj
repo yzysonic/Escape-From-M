@@ -261,6 +261,7 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="EnemyRare.h" />
+    <ClInclude Include="EnemyTarget.h" />
     <ClInclude Include="FadeScreen.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MagicSquare.h" />

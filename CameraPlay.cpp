@@ -100,10 +100,12 @@ void CameraPlay::MoveCamera(void)
 	if(IsButtonPressed(0, BUTTON_L1))
 		target_dis += GetPadRY()*10.0f;
 
+#ifndef _DEBUG
 	if (target_dis < 30.0f)
 		target_dis = 30.f;
 	if (target_dis > 100.0f)
 		target_dis = 100.0f;
+#endif
 
 	dis = dis + (target_dis - dis)*0.15f;
 

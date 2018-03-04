@@ -13,7 +13,8 @@ void SceneTest::Init(void)
 	Texture::LoadTexture("shadow");
 	Texture::LoadTexture("magic_square");
 	Texture::LoadTexture("player");
-	Texture::LoadTexture("player_bullet");
+	Texture::LoadTexture("bullet_player");
+	Texture::LoadTexture("bullet_enemy");
 
 
 	PixelShader::Load("BarrierPS.hlsl");
@@ -66,11 +67,13 @@ void SceneTest::Init(void)
 	this->barrier = new Barrier;
 
 	// エネミー初期化
-	Transform t;
-	this->enemy = new EnemyNormal(t);
-	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
-	this->enemy->target = this->barrier;
+	this->enemy_manager = new EnemyManager;
+	this->enemy_manager->target1 = this->barrier;
+	this->enemy_manager->target2 = this->magic_square;
 
+	this->enemy = new EnemyNormal;
+	this->enemy->transform.position = Vector3(50.0f, 0.0f, 50.0f);
+	this->enemy->target = this->barrier;
 }
 
 void SceneTest::Update(void)
@@ -86,5 +89,8 @@ void SceneTest::Update(void)
 			this->camera_play_mode = true;
 		}
 	}
+
+	if (GetKeyboardTrigger(DIK_E))
+		this->enemy_manager->SwapNormal();
 	
 }

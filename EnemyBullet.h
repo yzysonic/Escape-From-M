@@ -7,9 +7,9 @@
 class EnemyBullet : public Object
 {
 public:
-	Object* target;
-
 	EnemyBullet(void);
 	void Update(void) override;
 
+private:
+	FrameTimer timer;
 };

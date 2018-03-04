@@ -6,6 +6,7 @@
 #include "Barrier.h"
 #include "EnemyNormal.h"
 #include "EnemyBullet.h"
+#include "EnemyManager.h"
 
 class SceneTest : public Scene
 {
@@ -18,11 +19,11 @@ private:
 	Player* player;
 	Shadow* shadow;
 	MagicSquare* magic_square;
+	EnemyManager* enemy_manager;
 	Barrier* barrier;
 	Object* field;
 	Object* test_obj;
-	EnemyNormal* enemy;
-	EnemyBullet* enemybullet;
+	Enemy* enemy;
 	bool camera_play_mode;
 	bool light_on;
 };
