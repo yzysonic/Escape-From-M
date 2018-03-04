@@ -1,79 +1,59 @@
 #include "Player.h"
 #include "PlayerBulletShort.h"
 
+//=============================================================================
+// Player
+//=============================================================================
+
 Player::Player(void)
 {
 	this->type = ObjectType::Player;
-
-	this->hp = MaxHp;
 	this->atk = 1;
+	this->speed = PlayerSpeed;
+	this->anime = AnimeSet::Idle;
 
-	this->speed = 15.0f;
-	this->anime_state = AnimeState::Idle;
+	// AttackTarget初期化
+	this->hp = this->max_hp = MaxHp;
+	this->uihp->offset_y = 12.0f;
+	this->uihp->SetColor(Color::blue);
+	this->uihp->SetOpacity(0.0f);
+	this->event_damage += [&]{
+		this->current_state->SetState(StateName::Damage);
+	};
 
+	// モデル初期化
 	this->model = AddComponent<SkinnedModel>("player");
-	this->model->SetAnime((int)this->anime_state);
+	this->model->SetAnime((int)this->anime);
 
+	// コライダー初期化
+	this->collider = AddComponent<SphereCollider>();
+	this->collider->radius = Radius;
+
+	// 影初期化
 	this->shadow = new Shadow(this);
 	this->shadow->transform.scale = 5.0f*Vector3::one;
-}
 
-Player::~Player(void)
-{
+	// ステート初期化
+	this->state.resize((int)StateName::Max);
+	this->state[(int)StateName::Idle].reset(new StateIdle(this));
+	this->state[(int)StateName::Move].reset(new StateMove(this));
+	this->state[(int)StateName::Attack].reset(new StateAttack(this));
+	this->state[(int)StateName::Damage].reset(new StateDamage(this));
+	this->current_state = this->state[(int)StateName::Idle].get();
 }
 
 void Player::Update(void)
 {
+	AttackControl();
+	MoveControl();
 
-	switch (this->anime_state)
-	{
-	case AnimeState::Idle:
-	case AnimeState::Running:
-		Move();
-		Attack();
-
-		break;
-
-	case AnimeState::AttackShort:
-		if (this->anime_timer.Elapsed() > 0.3f)
-			break;
-
-		if (this->bullet_timer.TimeUp())
-		{
-			AttackShort();
-			this->bullet_timer.Reset();
-		}
-		
-		break;
-
-	case AnimeState::AttackLong:
-
-		break;
-
-
-	}
-
-	
-	if (this->anime_timer.TimeUp())
-	{
-		this->model->SetAnime((int)AnimeState::Idle);
-		this->anime_timer.Reset(-1);
-		this->anime_state = AnimeState::Idle;
-	}
-
-
-	this->anime_timer++;
-	this->bullet_timer++;
+	this->current_state->Update();
 }
 
-int Player::GetHp(void)
+void Player::Uninit(void)
 {
-	return this->hp;
-}
-
-Vector3 Player::GetAtkPos(Object * enemy)
-{
-	return this->transform.position;
+	this->shadow->Destroy();
+	this->uihp->Destroy();
 }
 
 void Player::AtkUp(void)
@@ -81,7 +61,21 @@ void Player::AtkUp(void)
 	this->atk = min(this->atk + 1, MaxAtk);
 }
 
-void Player::Move(void)
+void Player::SetAnime(AnimeSet anime, bool loop)
+{
+	int index = (int)anime;
+
+	this->model->SetAnime(index);
+	this->anime = anime;
+
+	if (loop)
+		this->anime_timer.Reset(-1);
+	else
+		this->anime_timer.Reset(this->model->GetAnimePeriod(index));
+
+}
+
+void Player::MoveControl(void)
 {
 	this->control = Vector3::zero;
 
@@ -101,74 +95,194 @@ void Player::Move(void)
 	// パッド入力
 	control += Vector3(GetPadLX(), 0, -GetPadLY());
 
-	// 移動処理
-	if (control.sqrLength() > 0.0f)
+	// ムーブイベント
+	if (this->control.sqrLength() >= 0.01f)
 	{
-		auto camera = Renderer::GetInstance()->getCamera();
-		Vector3 offset = this->transform.position - camera->transform.position;
-		float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
-
-		Vector3 move;
-		move.x = control.x*cosf(phi) - control.z*sinf(phi);
-		move.z = control.x*sinf(phi) + control.z*cosf(phi);
-
-		this->transform.position += move * this->speed * Time::DeltaTime();
-		if (this->anime_state == AnimeState::Idle)
-		{
-			this->model->SetAnime((int)AnimeState::Running);
-			this->anime_state = AnimeState::Running;
-		}
+		this->current_state->SetState(StateName::Move);
 		this->event_move();
-
-		// 向きの設定
-		this->transform.setFront(move);
-
 	}
-	else
-	{
-		if (this->anime_state == AnimeState::Running)
-		{
-			this->model->SetAnime((int)AnimeState::Idle);
-			this->anime_state = AnimeState::Idle;
-		}
-	}
-
-
 }
 
-void Player::Attack(void)
+void Player::Move(void)
 {
-	int anime_index = -1;
+	// 移動処理
+	auto camera = Renderer::GetInstance()->getCamera();
+	Vector3 offset = this->transform.position - camera->transform.position;
+	float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
+
+	Vector3 move;
+	move.x = control.x*cosf(phi) - control.z*sinf(phi);
+	move.z = control.x*sinf(phi) + control.z*cosf(phi);
+
+	// 移動量を反応
+	this->transform.position += move * this->speed * Time::DeltaTime();
+
+	// 向きの設定
+	this->transform.setFront(move);
+
+	// 移動状態に遷移
+	this->current_state->SetState(StateName::Move);
+}
+
+void Player::AttackControl(void)
+{
 	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort))
 	{
-		anime_index = (int)AnimeState::AttackShort;
-		this->anime_state = AnimeState::AttackShort;
+		this->SetAnime(AnimeSet::ShootBulletShort, false);
 		this->bullet_timer.Reset(0.03f);
-	}
-	if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
-	{
-		anime_index = (int)AnimeState::AttackLong;
-		this->anime_state = AnimeState::AttackLong;
-	}
-	if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
-	{
-		anime_index = (int)AnimeState::AttackArea;
-		this->anime_state = AnimeState::AttackArea;
+		this->update_attack = [&] {
+			if (this->anime_timer.Elapsed() > 0.3f)
+				return;
+
+			if (this->bullet_timer.TimeUp())
+			{
+				ShootBulletShort();
+				this->bullet_timer.Reset();
+			}
+			this->bullet_timer++;
+		};
 	}
 
-	if (anime_index >= 0)
-	{
-		this->model->SetAnime(anime_index);
-		this->anime_timer.Reset(this->model->GetAnimePeriod(anime_index));
-	}
+	else if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
+		this->SetAnime(AnimeSet::AttackLong, false);
 
+	else if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
+		this->SetAnime(AnimeSet::AttackArea, false);
+
+	else return;
+
+	this->current_state->SetState(StateName::Attack);
 }
 
-void Player::AttackShort(void)
+void Player::ShootBulletShort(void)
 {
 	Transform t = this->transform;
 	t.rotate(0.0f, Deg2Rad(Lerpf(50.0f, -50.0f, this->anime_timer.Elapsed()/0.3f)), 0.0f);
 	t.position += t.getFront()*5.0f;
 	t.position.y += 3.0f;
-	new PlayerBulletShort(t, 0.3f-this->anime_timer.Elapsed());
+	new PlayerBulletShort(t, 0.3f-this->anime_timer.Elapsed(), this->atk);
+}
+
+
+
+//=============================================================================
+// State
+//=============================================================================
+
+void Player::State::SetState(StateName state)
+{
+	this->player->current_state->OnExit();
+	this->player->current_state = player->state[(int)state].get();
+	this->player->current_state->OnEnter();
+}
+
+
+//=============================================================================
+// StateIdle
+//=============================================================================
+
+void Player::StateIdle::OnEnter(void)
+{
+	this->player->SetAnime(AnimeSet::Idle);
+}
+
+void Player::StateIdle::Update(void)
+{
+}
+
+void Player::StateIdle::SetState(StateName state)
+{
+	switch (state)
+	{
+	case StateName::Move:
+	case StateName::Attack:
+	case StateName::Damage:
+		State::SetState(state);
+	}
+}
+
+
+//=============================================================================
+// StateMove
+//=============================================================================
+
+void Player::StateMove::OnEnter(void)
+{
+	this->player->SetAnime(AnimeSet::Running);
+}
+
+void Player::StateMove::Update(void)
+{
+	float control_len = this->player->control.length();
+	if (control_len > 0.01f)
+	{
+		this->player->Move();
+		this->player->model->SetAnimeSpeedScale(control_len);
+	}
+	else
+		this->SetState(StateName::Idle);
+}
+
+void Player::StateMove::OnExit(void)
+{
+	this->player->model->SetAnimeSpeedScale(1.0f);
+}
+
+void Player::StateMove::SetState(StateName state)
+{
+	switch (state)
+	{
+	case StateName::Idle:
+	case StateName::Attack:
+	case StateName::Damage:
+		State::SetState(state);
+	}
+}
+
+
+//=============================================================================
+// StateAttack
+//=============================================================================
+
+void Player::StateAttack::Update(void)
+{
+	this->player->update_attack();
+
+	if (this->player->anime_timer.TimeUp())
+		SetState(StateName::Idle);
+
+	this->player->anime_timer++;
+}
+
+void Player::StateAttack::SetState(StateName state)
+{
+	switch (state)
+	{
+	case StateName::Idle:
+	//case StateName::Damage:
+		State::SetState(state);
+	}
+}
+
+
+//=============================================================================
+// StateDamage
+//=============================================================================
+
+void Player::StateDamage::OnEnter(void)
+{
+	this->player->SetAnime(AnimeSet::Injure, false);
+}
+
+void Player::StateDamage::Update(void)
+{
+	if (this->player->anime_timer.TimeUp())
+		SetState(StateName::Idle);
+	this->player->anime_timer++;
+}
+
+void Player::StateDamage::SetState(StateName state)
+{
+	if(state == StateName::Idle)
+		State::SetState(state);
 }

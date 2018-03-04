@@ -3,20 +3,33 @@
 
 Enemy::Enemy(void)
 {
+	this->type = ObjectType::Enemy;
+
+	// トラスフォーム初期化
 	this->transform.position = transform.position;
 	this->transform.setRotation(transform.getRotation());
 	this->transform.scale = transform.scale;
+
+	// モデル初期化
 	this->model = AddComponent<StaticModel>("enemy");
+
+	// コライダー初期化
 	this->collider = AddComponent<SphereCollider>();
-	this->type = ObjectType::Enemy;
-	this->target = NULL;
-	this->hp = 0;
-	this->max_hp = 1;
-	this->speed = 1.0f;
-	this->uihp = new UIHP(this, 15.0f);
-	this->shoot_distance = 0.0f;
+
+	// 影初期化
+	this->shadow = new Shadow(this);
+	this->shadow->transform.scale = 5.0f*Vector3::one;
+
+	// AttackTarget初期化
+	this->uihp->offset_y = 8.0f;
 	this->uihp->SetOpacity(0.0f);
-	this->state = State::Move;
+	this->damage_timer.Reset(0.4f);
+
+	// 他初期化
+	this->target = NULL;
+	this->speed = 1.0f;
+	this->shoot_distance = 0.0f;
+	this->state = State::MoveControl;
 
 	this->event_death += [&] {
 		timer.Reset(1.0f);
@@ -25,14 +38,15 @@ Enemy::Enemy(void)
 	};
 
 	SetScale(1.0f);
-
 }
 
 void Enemy::Update(void)
 {
+
 	switch (state)
 	{
-	case State::Move:
+	// ターゲットに向かって移動
+	case State::MoveControl:
 		Move();
 		if (IsInShootRange())
 		{
@@ -41,61 +55,45 @@ void Enemy::Update(void)
 		}
 		break;
 
+	// ターゲットに射撃
 	case State::Shoot:
 		if (IsInShootRange())
 			Shoot();
 		else
-			state = State::Move;
+			state = State::MoveControl;
 		break;
 
+	// フェイトアウト
 	case State::FadeOut:
 		if (!timer.TimeUp())
 			FadeOut();
 		else
-		{
 			this->Destroy();
-			this->uihp->Destroy();
-		}
 		break;
 	}
 
 	timer++;
+	damage_timer++;
+}
 
+void Enemy::Uninit(void)
+{
+	this->shadow->Destroy();
+	this->uihp->Destroy();
 }
 
 void Enemy::Move(void)
 {
-	if (target != NULL)
-	{
-		Vector3 EtoM;
-		float length;
-
-		EtoM = (target->GetAtkPos(this) - this->transform.position);
-		length = EtoM.length();
-
-		this->transform.lookAt(&target->transform);
-
-		EtoM = EtoM.normalized();
-
-		this->transform.position += EtoM * speed * Time::DeltaTime();
-	}
-
-}
-
-void Enemy::Damage(int point)
-{
-	if (this->hp == 0)
+	if (!IsVaildTarget())
 		return;
 
-	this->uihp->SetOpacity(1.0f);
+	Vector3 EtoM = ((*target)->GetAtkPos(this) - this->transform.position).normalized();
 
-	this->hp -= point;
-	this->uihp->SetPercent((float)this->hp / max_hp);
-
-	if (this->hp == 0)
-		this->event_death();
+	this->transform.position += EtoM * speed * Time::DeltaTime();
+	this->transform.lookAt(&(*target)->transform);
 
 }
+
 
 void Enemy::SetScale(float value)
 {
@@ -110,6 +108,7 @@ void Enemy::Shoot(void)
 		EnemyBullet* bullet = new EnemyBullet;
 
 		bullet->transform.position = this->transform.position;
+		bullet->transform.position.y = 2.0f;
 		bullet->transform.setFront(this->transform.getFront());
 
 		timer.Reset();
@@ -118,18 +117,30 @@ void Enemy::Shoot(void)
 
 bool Enemy::IsInShootRange(void)
 {
-	if (this->target == nullptr)
+	if (!IsVaildTarget())
 		return false;
 
-	return (this->transform.position - this->target->GetAtkPos(this)).sqrLength() <= this->shoot_distance*this->shoot_distance;
+	return (this->transform.position - (*this->target)->GetAtkPos(this)).sqrLength() <= this->shoot_distance*this->shoot_distance;
 }
 
 void Enemy::FadeOut(void)
 {
 	float opacity = 1.0f - timer.Progress();
-	for (int i = 0; i < this->model->numMaterial; i++)
+	for (int i = 0; i < (int)this->model->numMaterial; i++)
 	{
 		this->model->pMaterials[i].MatD3D.Diffuse.a = opacity;
 		this->uihp->SetOpacity(opacity);
+		this->shadow->SetOpacity(opacity);
 	}
+}
+
+bool Enemy::IsVaildTarget(void)
+{
+	if (this->target == nullptr)
+		return false;
+
+	if ((*this->target)->GetHp() <= 0)
+		return false;
+
+	return true;
 }

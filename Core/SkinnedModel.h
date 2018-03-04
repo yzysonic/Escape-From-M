@@ -30,9 +30,11 @@ public:
 	~SkinnedModel(void);
 	void Draw(void) override;
 	void SetAnime(int n);
+	void SetAnimeSpeedScale(float value);
 	float GetAnimePeriod(int n);
 
 private:
 	static D3DXFRAME *FindFrameByName(const char* name, D3DXFRAME *frame);
 	int anime_set_num;
+	float anime_speed_scale;
 };

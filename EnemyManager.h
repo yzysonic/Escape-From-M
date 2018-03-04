@@ -1,6 +1,6 @@
 #pragma once
 #include "Core\Core.h"
-#include "EnemyTarget.h"
+#include "AttackTarget.h"
 #include "EnemyNormal.h"
 #include "EnemyBig.h"
 #include "EnemyRare.h"
@@ -14,9 +14,9 @@ public:
 	static constexpr int	EnemyMax = 15;
 	static constexpr float	RearProb = 0.3f;
 
-	EnemyTarget* target1;
-	EnemyTarget* target2;
-	EnemyTarget* target3;
+	AttackTarget* target1;
+	AttackTarget* target2;
+	AttackTarget* target3;
 
 	EnemyManager(void);
 	void Update(void) override;
@@ -25,6 +25,7 @@ public:
 
 private:
 	FrameTimer swap_timer;
+	FrameTimer check_timer;
 	int enemy_count;
-	EnemyTarget* target_now;
+	AttackTarget* target_now;
 };

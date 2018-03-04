@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttackTarget.cpp" />
     <ClCompile Include="Barrier.cpp" />
     <ClCompile Include="CameraPlay.cpp" />
     <ClCompile Include="CameraSmooth.cpp" />
@@ -199,9 +200,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBulletShort.cpp" />
+    <ClCompile Include="SceneClear.cpp" />
+    <ClCompile Include="SceneGame.cpp" />
+    <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneMakotoTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
+    <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="UIHP.cpp" />
   </ItemGroup>
@@ -261,15 +266,19 @@
     <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="EnemyNormal.h" />
     <ClInclude Include="EnemyRare.h" />
-    <ClInclude Include="EnemyTarget.h" />
+    <ClInclude Include="AttackTarget.h" />
     <ClInclude Include="FadeScreen.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MagicSquare.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBulletShort.h" />
+    <ClInclude Include="SceneClear.h" />
+    <ClInclude Include="SceneGame.h" />
+    <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneMakotoTest.h" />
     <ClInclude Include="SceneTest.h" />
+    <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="UIHP.h" />
   </ItemGroup>

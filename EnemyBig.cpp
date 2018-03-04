@@ -6,8 +6,8 @@ EnemyBig::EnemyBig(void)
 	this->collider->radius = 3.0f;
 	this->transform.scale = 1.0f * Vector3::one;
 	this->speed = ENEMYBIG_SPEED;
-	this->hp = MaxHP;
-	this->max_hp = MaxHP;
+	this->hp = MaxHp;
+	this->max_hp = MaxHp;
 	this->timer.Reset(0.7f);
 }
 

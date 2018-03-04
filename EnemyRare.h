@@ -8,8 +8,8 @@
 class EnemyRare : public Enemy
 {
 public:
-	static const int MaxHP = 3;
-	int flag;
+	static const int MaxHp = 3;
+	bool flag;
 
 	EnemyRare(void);
 	void Update(void) override;

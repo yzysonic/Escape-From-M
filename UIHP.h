@@ -11,12 +11,15 @@ public:
 	static constexpr float Height = 3.0f;
 	float offset_y;
 
-	UIHP(Object* owner, float offset_y);
+	UIHP(Object* owner);
 	void Update(void) override;
 	void SetPercent(float value);
 	void SetOpacity(float value);
+	void SetSize(float width, float height);
+	void SetColor(Color color);
 
 private:
+	float width;
 	Transform* owner;
 	Object* obj_main_bar;
 	RectPolygon2D* base_bar;

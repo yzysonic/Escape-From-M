@@ -84,6 +84,7 @@ void Object::Destroy(void)
 	if (this->kill_flag == false)
 	{
 		this->SetActive(false);
+		this->Uninit();
 		ObjectManager::GetInstance()->AddKill(this);
 	}
 }

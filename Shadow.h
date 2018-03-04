@@ -8,6 +8,7 @@ public:
 	void Update(void) override;
 	void OnDraw(void) override;
 	void AfterDraw(void) override;
+	void SetOpacity(float value);
 
 private:
 	Transform* target;

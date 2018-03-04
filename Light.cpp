@@ -21,7 +21,7 @@ void InitLight(void)
 
 	// ライト0の拡散光の設定
 	g_aLight[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	g_aLight[0].Ambient = D3DXCOLOR(0.7f, 0.76f, 0.8f, 1.0f);
+	//g_aLight[0].Ambient = D3DXCOLOR(0.7f, 0.76f, 0.8f, 1.0f);
 
 	// ライト0の方向の設定
 	vecDir = D3DXVECTOR3(968.0f, -934.0f, 2689.0f);
@@ -56,5 +56,5 @@ void InitLight(void)
 
 	// ライティングモードをON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(0.7f, 0.76f, 0.8f, 1.0f));
+	pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_RGBA(233, 255, 210, 255));
 }

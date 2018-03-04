@@ -198,6 +198,21 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
+    <ClCompile Include="SceneClear.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGameOver.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneTitle.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackTarget.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGame.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -393,7 +408,19 @@
     <ClInclude Include="Enemy.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyTarget.h">
+    <ClInclude Include="SceneClear.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGameOver.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTitle.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGame.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackTarget.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>

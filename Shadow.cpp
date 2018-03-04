@@ -41,3 +41,8 @@ void Shadow::AfterDraw(void)
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 }
+
+void Shadow::SetOpacity(float value)
+{
+	this->GetComponent<RectPolygon>()->SetOpacity(value);
+}

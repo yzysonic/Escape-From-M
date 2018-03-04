@@ -7,7 +7,26 @@ void SceneGlobal::Init(void)
 {
 	// フェイドエフェクトの初期化
 	FadeScreen::Create();
-	//FadeScreen::FadeOut(Color::black, 0.0f);
+	FadeScreen::FadeOut(Color::black, 0.0f);
+
+	// タイトルテクスチャ
+	Texture::LoadTexture("forest");
+	Texture::LoadTexture("title_logo");
+	Texture::LoadTexture("title_start");
+	Texture::LoadTexture("title_exit");
+	Texture::LoadTexture("title_info");
+	Texture::LoadTexture("title_cursor");
+
+	// ゲームテクスチャ
+	Texture::LoadTexture("dark_grass");
+	Texture::LoadTexture("body_sum", "body_sum.tga");
+	Texture::LoadTexture("misaki_head", "misaki_head.tga");
+	Texture::LoadTexture("white_field", "white_field.jpg");
+	Texture::LoadTexture("magic_square");
+	Texture::LoadTexture("shadow");
+	Texture::LoadTexture("enemy");
+	Texture::LoadTexture("bullet_player");
+	Texture::LoadTexture("bullet_enemy");
 
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");

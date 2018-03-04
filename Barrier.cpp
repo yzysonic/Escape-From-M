@@ -2,8 +2,28 @@
 
 Barrier::Barrier(void)
 {
+	this->type = ObjectType::EnemyTarget;
+
 	AddComponent<StaticModel>("barrier", Layer::MASK);
-	this->hp = MaxHP;
+	AddComponent<SphereCollider>()->radius = Radius;
+
+	// AttackTarget‰Šú‰»
+	this->uihp->offset_y = Radius + 3.0f;
+	this->uihp->SetColor(Color::blue);
+	this->uihp->SetOpacity(0.0f);
+	this->uihp->SetSize(70.0f, UIHP::Height);
+	this->hp = this->max_hp = MaxHp;
+	this->radius = Radius;
+	this->event_death += [&]
+	{
+		this->uihp->SetOpacity(0.0f);
+		this->SetActive(false);
+	};
+}
+
+void Barrier::Uninit(void)
+{
+	this->uihp->Destroy();
 }
 
 void Barrier::OnDraw(void)
@@ -16,14 +36,4 @@ void Barrier::OnDraw(void)
 void Barrier::AfterDraw(void)
 {
 	//Direct3D::GetDevice()->SetPixelShader(NULL);
-}
-
-int Barrier::GetHp(void)
-{
-	return this->hp;
-}
-
-Vector3 Barrier::GetAtkPos(Object* enemy)
-{
-	return Radius*(enemy->transform.position - this->transform.position).normalized() + this->transform.position;
 }

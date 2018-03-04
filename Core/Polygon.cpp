@@ -37,7 +37,7 @@ void RectPolygon2D::Draw(void)
 }
 
 
-Vector2 RectPolygon2D::getSize(void)
+Vector2 RectPolygon2D::GetSize(void)
 {
 	return this->size;
 }

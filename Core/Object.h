@@ -41,6 +41,7 @@ public:
 	virtual ~Object(void);
 
 	virtual void Update(void) {};
+	virtual void Uninit(void) {};
 	virtual void OnDraw(void) {};
 	virtual void OnCollision(Object* other) {};
 	virtual void AfterDraw(void) {};

@@ -6,8 +6,8 @@ EnemyRare::EnemyRare(void)
 	this->model = AddComponent<StaticModel>("enemy_rear");
 	this->transform.scale = 0.5f * Vector3::one;
 	this->collider->radius = 3.0f;
-	this->hp = MaxHP;
-	this->max_hp = MaxHP;
+	this->hp = MaxHp;
+	this->max_hp = MaxHp;
 	this->flag = false;
 
 	this->target = NULL;
@@ -18,7 +18,7 @@ void EnemyRare::Update(void)
 {
 	switch (state)
 	{
-	case State::Move:
+	case State::MoveControl:
 		if (flag == false)
 		{
 			this->transform.position.x += 10.0f*Time::DeltaTime();

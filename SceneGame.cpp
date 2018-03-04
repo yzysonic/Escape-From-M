@@ -1,11 +1,14 @@
-#include "SceneTest.h"
+#include "SceneGame.h"
 #include "FadeScreen.h"
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
 
-void SceneTest::Init(void)
+SceneGame::SceneGame(void)
 {
+}
 
+void SceneGame::Init(void)
+{
 	// カメラ初期化
 	this->camera = new Camera;
 	this->camera->setBackColor(Color(223, 223, 223, 255));
@@ -16,6 +19,10 @@ void SceneTest::Init(void)
 	this->camera->AddComponent<CameraPlay>();
 	this->camera_play_mode = false;
 	Renderer::GetInstance()->setCamera(this->camera);
+
+	// ライティングオン
+	Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
+
 
 	// 床初期化
 	this->field = new Object;
@@ -55,10 +62,12 @@ void SceneTest::Init(void)
 	this->enemy_manager->target2 = this->magic_square;
 	this->enemy_manager->target3 = this->player;
 
-	FadeScreen::FadeIn(Color::black, 0.0f);
+	// フェイトイン
+	FadeScreen::FadeIn(Color::black, 0.7f);
+
 }
 
-void SceneTest::Update(void)
+void SceneGame::Update(void)
 {
 	// カメラモードの切替
 	Vector2 pad_input_r(GetPadRX(), GetPadRY());
@@ -72,10 +81,8 @@ void SceneTest::Update(void)
 		}
 	}
 
-	if (GetKeyboardTrigger(DIK_E))
-	{
-		this->enemy_manager->SwapNormal();
-		this->enemy_manager->SwapRear();
-	}
-	
+}
+
+void SceneGame::Uninit(void)
+{
 }

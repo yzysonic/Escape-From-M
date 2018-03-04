@@ -7,7 +7,7 @@
 class EnemyBig : public Enemy
 {
 public:
-	static const int MaxHP = 10;
+	static const int MaxHp = 10;
 
 	FrameTimer timer;
 	EnemyBig(void);

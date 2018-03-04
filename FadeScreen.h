@@ -30,12 +30,12 @@ private:
 	float oldOpacity;
 	Color fadeColor;
 
-	enum AnimeState
+	enum AnimeSet
 	{
 		Run,
 		Stop,
 	};
 
-	AnimeState state;
+	AnimeSet state;
 
 };

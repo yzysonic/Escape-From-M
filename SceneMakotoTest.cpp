@@ -75,17 +75,17 @@ void SceneMakotoTest::Init(void)
 	Transform t;
 	this->enemy = new EnemyNormal;
 	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
-	this->enemy->target = this->barrier;
+	//this->enemy->target = this->barrier;
 
 	// エネミーレア初期化
 	this->enemyr = new EnemyRare;
 	this->enemyr->transform.position = Vector3(0.0f, 0.0f, -50);
-	this->enemyr->target = this->player;
+	//this->enemyr->target = this->player;
 
 	// エネミービッグ初期化
 	this->enemyb = new EnemyBig;
 	this->enemyb->transform.position = Vector3(-50.0f, 0.0f, 0.0f);
-	this->enemyb->target = this->barrier;
+	//this->enemyb->target = this->barrier;
 
 }
 

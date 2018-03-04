@@ -2,23 +2,40 @@
 
 MagicSquare::MagicSquare(void)
 {
+	this->type = ObjectType::EnemyTarget;
+
 	AddComponent<RectPolygon>("magic_square")->SetSize(Vector2(50.0f, 50.0f));
+	AddComponent<SphereCollider>()->radius = Radius;
+
 	this->transform.position.y += 0.01f;
 	this->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
 
 	this->rotation_speed = 0.01f;
 	this->color_change_speed = 1.0f;
-	this->hp = MaxHP;
+	
+	// AttackTarget‰Šú‰»
+	this->hp = this->max_hp = MaxHp;
+	this->uihp->offset_y = 5.0f;
+	this->uihp->SetSize(70.0f, UIHP::Height);
+	this->uihp->SetColor(Color::blue);
+	this->uihp->SetOpacity(0.0f);
+	this->radius = Radius;
+	this->event_death += [&]
+	{
+		this->uihp->SetOpacity(0.0f);
+		this->SetActive(false);
+	};
+
 }
 
 void MagicSquare::Update(void)
 {
 	this->transform.rotate(0.0f, rotation_speed, 0.0f);
 
-	char c = (UCHAR)(255 * (0.7f + 0.3f*sinf(color_change_speed*this->timer.Elapsed()*2.0f + PI)));
+	char c = (UCHAR)(255 * (0.7f + 0.3f*sinf(color_change_speed*this->effect_timer.Elapsed()*2.0f + PI)));
 	this->GetComponent<RectPolygon>()->SetColor(Color(c, c, 255, 255));
 
-	this->timer++;
+	this->effect_timer++;
 }
 
 void MagicSquare::OnDraw(void)
@@ -47,14 +64,4 @@ void MagicSquare::AfterDraw(void)
 	// ƒ‰ƒCƒg‚ ‚è
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-}
-
-int MagicSquare::GetHp(void)
-{
-	return this->hp;
-}
-
-Vector3 MagicSquare::GetAtkPos(Object * enemy)
-{
-	return Radius*(enemy->transform.position - this->transform.position).normalized() + this->transform.position;
 }

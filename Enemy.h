@@ -1,39 +1,38 @@
 #pragma once
 #include "Core/Core.h"
 #include "UIHP.h"
-#include "EnemyTarget.h"
+#include "AttackTarget.h"
+#include "Shadow.h"
 
-class Enemy : public Object
+class Enemy : public AttackTarget
 {
 public:
 	enum class State
 	{
-		Move,
+		MoveControl,
 		Shoot,
 		FadeOut
 	} state;
 
-	EnemyTarget* target;
+	AttackTarget** target;
 	float shoot_distance;
-	Event event_death;
 
 	Enemy(void);
 	virtual void Update(void) override;
+	void Uninit(void) override;
 	void Move(void);
-	void Damage(int point);
 	void SetScale(float value);
 	void Shoot(void);
 
 protected:
-	int hp;
-	int max_hp;
 	float speed;
-	UIHP* uihp;
 	StaticModel* model;
 	SphereCollider* collider;
+	Shadow* shadow;
 	FrameTimer timer;
 
 	bool IsInShootRange(void);
 	void FadeOut(void);
+	bool IsVaildTarget(void);
 
 };

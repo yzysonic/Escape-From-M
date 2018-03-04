@@ -51,8 +51,8 @@ public:
 	RectPolygon2D(std::string texture_name = "none", Layer layer = Layer::DEFAULT, std::string render_space_name = "default");
 	void Draw(void) override;
 	void SetColor(Color color);
-	Vector2 getSize(void);
 	void SetSize(float x, float y);
+	Vector2 GetSize(void);
 	void setPattern(unsigned int pattern);
 	void SetTexture(std::string texture_name);
 	void SetTexture(Texture* texture);

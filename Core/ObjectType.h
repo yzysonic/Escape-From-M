@@ -4,7 +4,7 @@ enum struct ObjectType
 {
 	Object,
 	NumberUI,
-	PolygonElement,
+	EnemyTarget,
 	Camera,
 	Player,
 	Bullet,

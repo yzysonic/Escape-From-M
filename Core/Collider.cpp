@@ -53,7 +53,7 @@ void BoxCollider2D::BindObject(Object * object)
 
 	auto poly = object->GetComponent<RectPolygon2D>();
 	if (poly != nullptr)
-		this->size = poly->getSize();
+		this->size = poly->GetSize();
 	else
 		this->size = 100.0f * Vector2::one;
 }

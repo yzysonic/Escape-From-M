@@ -36,6 +36,7 @@ SkinnedModel::SkinnedModel(std::string model_name) : Drawable(Layer::DEFAULT, "d
 	this->activeAnimation = 0;
 	this->alphaTestEnable = false;
 	this->anime_set_num = 0;
+	this->anime_speed_scale = 1.0f;
 
 	path = MODEL_PATH + model_name + ".x";
 
@@ -125,7 +126,7 @@ void SkinnedModel::Draw(void)
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
 
 	// アニメーション更新
-	this->animator->AdvanceTime(0.016f, 0);
+	this->animator->AdvanceTime(0.016f*this->anime_speed_scale, 0);
 	// ボーンマトリクス更新
 	this->object->transform.UpdateWorldMatrix();
 	// 頂点を ローカル空間 → ボーン空間 → フレームローカル空間 → ワールド空間 の順番で変換するためのマトリクス
@@ -170,10 +171,15 @@ void SkinnedModel::SetAnime(int n)
 	this->animator->SetTrackPosition(0, 0);
 }
 
+void SkinnedModel::SetAnimeSpeedScale(float value)
+{
+	this->anime_speed_scale = value;
+}
+
 float SkinnedModel::GetAnimePeriod(int n)
 {
 	if(n<this->anime_set_num)
-		return this->animationSet[n]->GetPeriod();
+		return (float)this->animationSet[n]->GetPeriod();
 	else 
 		return 0.0f;
 }

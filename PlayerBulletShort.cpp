@@ -1,6 +1,7 @@
 #include "PlayerBulletShort.h"
+#include "AttackTarget.h"
 
-PlayerBulletShort::PlayerBulletShort(Transform transform, float wait_time)
+PlayerBulletShort::PlayerBulletShort(Transform transform, float wait_time, int atk)
 {
 	this->billboard = AddComponent<Billboard>("bullet_player");
 	this->collider = AddComponent<SphereCollider>();
@@ -16,6 +17,7 @@ PlayerBulletShort::PlayerBulletShort(Transform transform, float wait_time)
 	this->state = 0;
 	this->timer.Reset(0.1f);
 	this->syn_timer.Reset(wait_time + 0.1f);
+	this->atk = atk;
 }
 
 void PlayerBulletShort::Update(void)
@@ -63,7 +65,12 @@ void PlayerBulletShort::OnCollision(Object * other)
 {
 	if (other->type == ObjectType::Enemy)
 	{
-		this->Destroy();
+		auto target = dynamic_cast<AttackTarget*>(other);
+		target->Damage(atk);
+	}
+	else if (other->type == ObjectType::Bullet_E)
+	{
+		other->Destroy();
 	}
 }
 
