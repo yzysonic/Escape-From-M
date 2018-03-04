@@ -26,6 +26,7 @@ public:
 
 protected:
 	float speed;
+	int element_num;
 	StaticModel* model;
 	SphereCollider* collider;
 	Shadow* shadow;
@@ -34,5 +35,6 @@ protected:
 	bool IsInShootRange(void);
 	void FadeOut(void);
 	bool IsVaildTarget(void);
+	void DropMaterial(void);
 
 };

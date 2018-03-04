@@ -8,7 +8,7 @@
 class EnemyManager : public Object
 {
 public:
-	static constexpr float	SwapRadius = 100.0f;
+	static constexpr float	SwapRadius = 150.0f;
 	static constexpr float	SwapInterval = 5.0f;
 	static constexpr int	SwapNormalNum = 3;
 	static constexpr int	EnemyMax = 15;

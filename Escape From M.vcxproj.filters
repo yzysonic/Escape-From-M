@@ -213,6 +213,15 @@
     <ClCompile Include="SceneGame.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Element.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberUI.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="UIElement.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\System.h">
@@ -421,6 +430,15 @@
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="AttackTarget.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Element.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberUI.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="UIElement.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>

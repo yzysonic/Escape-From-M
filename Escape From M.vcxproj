@@ -188,6 +188,7 @@
     <ClCompile Include="Core\Transform.cpp" />
     <ClCompile Include="Core\Vector.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="Element.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBig.cpp" />
     <ClCompile Include="EnemyBullet.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MagicSquare.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBulletShort.cpp" />
     <ClCompile Include="SceneClear.cpp" />
@@ -208,6 +210,7 @@
     <ClCompile Include="SceneTest.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="UIElement.cpp" />
     <ClCompile Include="UIHP.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -270,6 +273,8 @@
     <ClInclude Include="FadeScreen.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MagicSquare.h" />
+    <ClInclude Include="Element.h" />
+    <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBulletShort.h" />
     <ClInclude Include="SceneClear.h" />
@@ -280,6 +285,7 @@
     <ClInclude Include="SceneTest.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shadow.h" />
+    <ClInclude Include="UIElement.h" />
     <ClInclude Include="UIHP.h" />
   </ItemGroup>
   <ItemGroup>

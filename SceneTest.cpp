@@ -17,6 +17,19 @@ void SceneTest::Init(void)
 	this->camera_play_mode = false;
 	Renderer::GetInstance()->setCamera(this->camera);
 
+	// UI‰Šú‰»
+	this->ui_element = new UIElement(
+		10 + (int)Texture::Get("ui_element_title")->size.x - SystemParameters::ResolutionX/2, 
+		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY/2
+	);
+	this->ui_day = new NumberUI(
+		1,
+		SystemParameters::ResolutionX/2 - 70,
+		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2,
+		"number", "ui_day_title"
+	);
+	this->ui_day->SetNumber(1);
+
 	// °‰Šú‰»
 	this->field = new Object;
 	this->field->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
@@ -40,6 +53,9 @@ void SceneTest::Init(void)
 			this->camera->GetComponent<CameraSmooth>()->SetActive(true);
 			this->camera_play_mode = false;
 		}
+	};
+	this->player->event_get_element += [&] {
+		this->ui_element->SetNumber(this->player->GetElementNum());
 	};
 	this->camera->AddComponent<CameraSmooth>(this->player);
 

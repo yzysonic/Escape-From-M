@@ -4,6 +4,7 @@
 
 #define ENEMY_RARE (30)
 #define ENEMYRARE_SPEED (1.0f)
+#define EnemyRareElementNum (10);
 
 class EnemyRare : public Enemy
 {

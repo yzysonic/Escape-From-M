@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "EnemyBullet.h"
+#include "Element.h"
 
 Enemy::Enemy(void)
 {
@@ -29,9 +30,11 @@ Enemy::Enemy(void)
 	this->target = NULL;
 	this->speed = 1.0f;
 	this->shoot_distance = 0.0f;
+	this->element_num = 1;
 	this->state = State::MoveControl;
 
 	this->event_death += [&] {
+		DropMaterial();
 		timer.Reset(1.0f);
 		this->collider->SetActive(false);
 		this->state = State::FadeOut;
@@ -143,4 +146,10 @@ bool Enemy::IsVaildTarget(void)
 		return false;
 
 	return true;
+}
+
+void Enemy::DropMaterial(void)
+{
+	for (int i = 0; i < this->element_num; i++)
+		new Element(this->transform.position + Vector3(Randomf(0.0f, 2.0f), Randomf(2.0f, 4.0f), Randomf(0.0f, 2.0f)));
 }

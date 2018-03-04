@@ -11,6 +11,7 @@ Player::Player(void)
 	this->atk = 1;
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
+	this->element_num = 0;
 
 	// AttackTarget‰Šú‰»
 	this->hp = this->max_hp = MaxHp;
@@ -56,9 +57,23 @@ void Player::Uninit(void)
 	this->uihp->Destroy();
 }
 
+void Player::OnCollision(Object * other)
+{
+	if (other->type == ObjectType::Element)
+	{
+		this->element_num++;
+		this->event_get_element();
+	}
+}
+
 void Player::AtkUp(void)
 {
 	this->atk = min(this->atk + 1, MaxAtk);
+}
+
+int Player::GetElementNum(void)
+{
+	return this->element_num;
 }
 
 void Player::SetAnime(AnimeSet anime, bool loop)

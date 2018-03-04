@@ -105,15 +105,17 @@ public:
 
 	int atk;
 	Event event_move;
-
+	Event event_get_element;
 
 	// メンバー関数定義
 	
 	Player(void);
 	void Update(void) override;
 	void Uninit(void) override;
+	void OnCollision(Object* other) override;
 	// プレイヤーのATK値を1単位上げる、MAXになるとそれ以上増えない。
 	void AtkUp(void); 
+	int GetElementNum(void);
 
 
 private:
@@ -126,6 +128,7 @@ private:
 	FrameTimer anime_timer;
 	FrameTimer bullet_timer;
 	float speed;
+	int element_num;
 	std::function<void(void)> update_attack;
 
 

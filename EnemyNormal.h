@@ -3,6 +3,7 @@
 #include "Enemy.h"
 
 #define ENEMY_SPEED 10.0f;
+#define EnemyNormalElementNum (3)
 
 class EnemyNormal : public Enemy
 {

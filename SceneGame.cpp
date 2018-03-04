@@ -20,6 +20,12 @@ void SceneGame::Init(void)
 	this->camera_play_mode = false;
 	Renderer::GetInstance()->setCamera(this->camera);
 
+	// UI初期化
+	this->ui_element = new UIElement(
+		10 + (int)Texture::Get("ui_element_title")->size.x - SystemParameters::ResolutionX / 2,
+		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2
+	);
+
 	// ライティングオン
 	Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
 
@@ -47,6 +53,9 @@ void SceneGame::Init(void)
 			this->camera->GetComponent<CameraSmooth>()->SetActive(true);
 			this->camera_play_mode = false;
 		}
+	};
+	this->player->event_get_element += [&] {
+		this->ui_element->SetNumber(this->player->GetElementNum());
 	};
 	this->camera->AddComponent<CameraSmooth>(this->player);
 

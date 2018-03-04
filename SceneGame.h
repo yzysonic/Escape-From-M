@@ -5,6 +5,7 @@
 #include "MagicSquare.h"
 #include "Barrier.h"
 #include "EnemyManager.h"
+#include "UIElement.h"
 
 
 class SceneGame : public Scene
@@ -17,6 +18,7 @@ public:
 
 private:
 	Camera* camera;
+	UIElement* ui_element;
 	Player* player;
 	Shadow* shadow;
 	MagicSquare* magic_square;

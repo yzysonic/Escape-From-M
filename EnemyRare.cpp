@@ -13,6 +13,8 @@ EnemyRare::EnemyRare(void)
 
 	this->target = NULL;
 	this->timer.Reset(3.0f);
+
+	this->element_num = EnemyRareElementNum;
 }
 
 void EnemyRare::Update(void)

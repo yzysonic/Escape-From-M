@@ -2,6 +2,7 @@
 
 #include "Common.h"
 #include "GameManager.h"
+#include "ObjectManager.h"
 #include "Input.h"
 #include "Sound.h"
 #include "Math.h"

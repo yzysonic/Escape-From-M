@@ -1,5 +1,7 @@
 #include "SceneGlobal.h"
 #include "SceneTest.h"
+#include "SceneTitle.h"
+#include "SceneGame.h"
 #include "FadeScreen.h"
 #include "Light.h"
 
@@ -27,6 +29,10 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("enemy");
 	Texture::LoadTexture("bullet_player");
 	Texture::LoadTexture("bullet_enemy");
+	Texture::LoadTexture("element");
+	Texture::LoadTexture("number", "number.png", 10);
+	Texture::LoadTexture("ui_element_title");
+	Texture::LoadTexture("ui_day_title");
 
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");
@@ -52,6 +58,11 @@ void SceneGlobal::Update(void)
 
 	if (GetKeyboardTrigger(DIK_0))
 		gm->SetScene(new SceneTest);
+	if (GetKeyboardTrigger(DIK_1))
+		gm->SetScene(new SceneTitle);
+	if (GetKeyboardTrigger(DIK_2))
+		gm->SetScene(new SceneGame);
+
 #endif
 }
 

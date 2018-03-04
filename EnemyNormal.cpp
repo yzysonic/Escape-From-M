@@ -10,4 +10,5 @@ EnemyNormal::EnemyNormal(void)
 	this->hp = MaxHp;
 	this->max_hp = MaxHp;
 	this->shoot_distance = 10.0f;
+	this->element_num = EnemyNormalElementNum;
 }

@@ -7,6 +7,7 @@
 #include "EnemyNormal.h"
 #include "EnemyBullet.h"
 #include "EnemyManager.h"
+#include "UIElement.h"
 
 class SceneTest : public Scene
 {
@@ -24,6 +25,8 @@ private:
 	Object* field;
 	Object* test_obj;
 	Enemy* enemy;
+	UIElement* ui_element;
+	NumberUI* ui_day;
 	bool camera_play_mode;
 	bool light_on;
 };
