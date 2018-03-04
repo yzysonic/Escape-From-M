@@ -9,6 +9,7 @@ EnemyRare::EnemyRare(void)
 	this->hp = MaxHp;
 	this->max_hp = MaxHp;
 	this->flag = false;
+	this->count = 0;
 
 	this->target = NULL;
 	this->timer.Reset(3.0f);
@@ -36,9 +37,20 @@ void EnemyRare::Update(void)
 
 			if (this->timer.TimeUp())
 			{
-				flag = false;
+				this->count++;
+
+				if (count != 2)
+				{
+					flag = false;
+				}
 				this->timer.Reset();
 			}
+		}
+
+		if (count == 2)
+		{
+			this->timer.Reset(0.4f);
+			this->state = State::FadeOut;
 		}
 		break;
 
@@ -59,6 +71,7 @@ void EnemyRare::Update(void)
 	}
 
 	timer++;
+	damage_timer++;
 }
 
 void EnemyRare::OnCollision(Object * other)

@@ -10,6 +10,7 @@ class EnemyRare : public Enemy
 public:
 	static const int MaxHp = 3;
 	bool flag;
+	int count;
 
 	EnemyRare(void);
 	void Update(void) override;
