@@ -5,6 +5,8 @@
 #include "MagicSquare.h"
 #include "Barrier.h"
 #include "EnemyNormal.h"
+#include "EnemyRare.h"
+#include "EnemyBig.h"
 #include "EnemyBullet.h"
 
 class SceneMakotoTest : public Scene
@@ -22,6 +24,8 @@ private:
 	Object* field;
 	Object* test_obj;
 	EnemyNormal* enemy;
+	EnemyRare* enemyr;
+	EnemyBig* enemyb;
 	EnemyBullet* enemybullet;
 	bool camera_play_mode;
 	bool light_on;

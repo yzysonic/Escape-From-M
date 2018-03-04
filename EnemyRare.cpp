@@ -1,16 +1,18 @@
 #include "EnemyRare.h"
+#include "EnemyBullet.h"
 
 int flag = false;
+bool use = false;
 
-EnemyRare::EnemyRare(void)
+EnemyRare::EnemyRare(Transform transform) : Enemy(transform)
 {
-	this->AddComponent<RectPolygon>("player");
-
-	RectPolygon* poly = this->GetComponent<RectPolygon>();
-	poly->SetColor(Color(255, 0, 0, 255));
-
 	this->transform.setRotation(0.0f, 0.0f, 0.0f);
 	this->transform.position = Vector3(300.0f, 0.0f, 200.0f);
+	this->transform.scale = 0.5f * Vector3::one;
+	this->collider = AddComponent<SphereCollider>();
+	this->collider->radius = 3.0f;
+	this->hp = MaxHP;
+	this->max_hp = MaxHP;
 
 	this->target = NULL;
 	this->timer.Reset(3.0f);
@@ -18,32 +20,60 @@ EnemyRare::EnemyRare(void)
 
 void EnemyRare::Update(void)
 {
-	if (flag == false)
-	{
-		this->transform.position.x += 10.0f*Time::DeltaTime();
+	Vector3 RtoP;
 
-		if (this->timer.TimeUp())
+	this->transform.lookAt(&target->transform);
+
+	RtoP = (target->transform.position - this->transform.position);
+
+	if (use == false)
+	{
+		if (flag == false)
 		{
-			flag = true;
-			this->timer.Reset();
+			this->transform.position.x += 10.0f*Time::DeltaTime();
+
+			if (this->timer.TimeUp())
+			{
+				flag = true;
+				this->timer.Reset();
+			}
+		}
+
+		if (flag == true)
+		{
+			this->transform.position.x -= 10.0f*Time::DeltaTime();
+
+			if (this->timer.TimeUp())
+			{
+				flag = false;
+				this->timer.Reset();
+			}
 		}
 	}
 
-	if (flag == true)
+	if (use == true)
 	{
-		this->transform.position.x -= 10.0f*Time::DeltaTime();
+		RtoP = RtoP.normalized();
+		this->transform.position += RtoP * speed * Time::DeltaTime();
 
 		if (this->timer.TimeUp())
 		{
-			flag = false;
-			this->timer.Reset();
+			EnemyBullet* bullet = new EnemyBullet;
+			bullet->dir = RtoP;
+			bullet->transform.position = this->transform.position;
+			bullet->target = this->target;
+
+			timer.Reset();
 		}
 	}
-
 	this->timer++;
 }
 
-//D3DXVECTOR3 EnemyRare::GetPositionEnemyRare(void)
-//{
-//	return this->transform.position;
-//}
+void EnemyRare::OnCollision(Object * other)
+{
+	if (other->type == ObjectType::Bullet)
+	{
+		use = true;
+		this->Damage(1);
+	}
+}

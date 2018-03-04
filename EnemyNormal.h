@@ -9,6 +9,7 @@ class EnemyNormal : public Enemy
 public:
 	static const int MaxHP = 3;
 
+	FrameTimer timer;
 	EnemyNormal(Transform transform);
 	void Update(void) override;
 	void OnCollision(Object* other) override;

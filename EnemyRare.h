@@ -1,17 +1,18 @@
 #pragma once
 #include "Core/Core.h"
+#include "Enemy.h"
 
 #define ENEMY_RARE (30)
-#define SPEED (1.0f)
+#define ENEMYRARE_SPEED (1.0f)
 
-class EnemyRare : public Object
+class EnemyRare : public Enemy
 {
 public:
-	Object* target;
 	FrameTimer timer;
 
-	EnemyRare(void);
-	void Update(void) override;
-	//D3DXVECTOR3 GetPositionEnemyRare(void);
+	static const int MaxHP = 3;
 
+	EnemyRare(Transform transform);
+	void Update(void) override;
+	void OnCollision(Object* other) override;
 };
