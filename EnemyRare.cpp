@@ -9,6 +9,7 @@ EnemyRare::EnemyRare(void)
 	this->hp = MaxHP;
 	this->max_hp = MaxHP;
 	this->flag = false;
+	this->count = 0;
 
 	this->target = NULL;
 	this->timer.Reset(3.0f);
@@ -36,9 +37,20 @@ void EnemyRare::Update(void)
 
 			if (this->timer.TimeUp())
 			{
-				flag = false;
+				this->count++;
+
+				if (count != 3)
+				{
+					flag = false;
+				}
 				this->timer.Reset();
 			}
+		}
+
+		if (count == 3)
+		{
+			FadeOut();
+			//this->count = 0;
 		}
 		break;
 
