@@ -2,6 +2,8 @@
 #include "SceneTest.h"
 #include "SceneTitle.h"
 #include "SceneGame.h"
+#include "SceneClear.h"
+#include "SceneGameOver.h"
 #include "FadeScreen.h"
 #include "Light.h"
 
@@ -33,6 +35,10 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("number", "number.png", 10);
 	Texture::LoadTexture("ui_element_title");
 	Texture::LoadTexture("ui_day_title");
+	Texture::LoadTexture("game_over");
+	Texture::LoadTexture("result_title");
+	Texture::LoadTexture("number_score", "number_score.png", 10);
+	Texture::LoadTexture("game_score");
 
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");
@@ -62,6 +68,10 @@ void SceneGlobal::Update(void)
 		gm->SetScene(new SceneTitle);
 	if (GetKeyboardTrigger(DIK_2))
 		gm->SetScene(new SceneGame);
+	if (GetKeyboardTrigger(DIK_3))
+		gm->SetScene(new SceneGameOver);
+	if (GetKeyboardTrigger(DIK_4))
+		gm->SetScene(new SceneClear);
 
 #endif
 }

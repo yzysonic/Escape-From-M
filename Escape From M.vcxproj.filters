@@ -174,9 +174,6 @@
     <ClCompile Include="EnemyBig.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyBullet.cpp">
-      <Filter>GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyNormal.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
@@ -198,12 +195,6 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="SceneClear.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneGameOver.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
     <ClCompile Include="SceneTitle.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
@@ -221,6 +212,18 @@
     </ClCompile>
     <ClCompile Include="UIElement.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGameOver.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneClear.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreUI.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -417,12 +420,6 @@
     <ClInclude Include="Enemy.h">
       <Filter>GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="SceneClear.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneGameOver.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
     <ClInclude Include="SceneTitle.h">
       <Filter>Scene</Filter>
     </ClInclude>
@@ -439,6 +436,15 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="UIElement.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneClear.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneGameOver.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreUI.h">
       <Filter>GameObject</Filter>
     </ClInclude>
   </ItemGroup>

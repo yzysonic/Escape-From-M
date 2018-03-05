@@ -9,7 +9,7 @@ class EnemyManager : public Object
 {
 public:
 	static constexpr float	SwapRadius = 150.0f;
-	static constexpr float	SwapInterval = 5.0f;
+	static constexpr float	SwapInterval = 10.0f;
 	static constexpr int	SwapNormalNum = 3;
 	static constexpr int	EnemyMax = 15;
 	static constexpr float	RearProb = 0.3f;
