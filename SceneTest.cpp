@@ -18,17 +18,16 @@ void SceneTest::Init(void)
 	Renderer::GetInstance()->setCamera(this->camera);
 
 	// UI初期化
+	this->ui_bighp = new UIBigHp(130 + (Texture::Get("ui_gauge")->size.x-SystemParameters::ResolutionX)/2, 70 - SystemParameters::ResolutionY / 2);
 	this->ui_element = new UIElement(
-		10 + (int)Texture::Get("ui_element_title")->size.x - SystemParameters::ResolutionX/2, 
-		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY/2
+		- (int)Texture::Get("ui_element_title")->size.x + SystemParameters::ResolutionX/2 - 40, 
+		- (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY/2 - 20
 	);
-	this->ui_day = new NumberUI(
-		1,
-		SystemParameters::ResolutionX/2 - 70,
-		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2,
-		"number", "ui_day_title"
+	this->ui_daytime = new UIDayTime(
+		-SystemParameters::ResolutionX/2 + 150,
+		-50 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2
 	);
-	this->ui_day->SetNumber(1);
+	this->ui_daytime->SetDay(1);
 
 	// 床初期化
 	this->field = new Object;
@@ -61,9 +60,19 @@ void SceneTest::Init(void)
 
 	// 魔法陣初期化
 	this->magic_square = new MagicSquare;
+	this->magic_square->event_damage += [&] {
+		this->ui_bighp->SetPercent((float)this->magic_square->GetHp() / MagicSquare::MaxHp);
+	};
 
 	// 結界初期化
 	this->barrier = new Barrier;
+	this->barrier->event_damage += [&] {
+		this->ui_bighp->SetPercent((float)this->barrier->GetHp() / Barrier::MaxHp);
+	};
+	this->barrier->event_death += [&] {
+		this->ui_bighp->SetTexture("ui_bighp_title2");
+		this->ui_bighp->SetPercent((float)this->magic_square->GetHp() / MagicSquare::MaxHp);
+	};
 
 	// エネミー初期化
 	this->enemy_manager = new EnemyManager;
@@ -72,6 +81,8 @@ void SceneTest::Init(void)
 	this->enemy_manager->target3 = this->player;
 
 	FadeScreen::FadeIn(Color::black, 0.0f);
+
+	this->timer.Reset(10.0f);
 }
 
 void SceneTest::Update(void)
@@ -93,5 +104,8 @@ void SceneTest::Update(void)
 		this->enemy_manager->SwapNormal();
 		this->enemy_manager->SwapRear();
 	}
+
+	this->ui_daytime->SetTime(this->timer.Progress());
+	this->timer++;
 	
 }

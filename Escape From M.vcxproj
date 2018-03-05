@@ -202,15 +202,16 @@
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerBulletShort.cpp" />
-    <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="SceneGame.cpp" />
-    <ClCompile Include="SceneGameOver.cpp" />
     <ClCompile Include="SceneGlobal.cpp" />
     <ClCompile Include="SceneMakotoTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="UIBigHp.cpp" />
+    <ClCompile Include="UIDayTime.cpp" />
     <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIGauge.cpp" />
     <ClCompile Include="UIHP.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -277,15 +278,16 @@
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerBulletShort.h" />
-    <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneGame.h" />
-    <ClInclude Include="SceneGameOver.h" />
     <ClInclude Include="SceneGlobal.h" />
     <ClInclude Include="SceneMakotoTest.h" />
     <ClInclude Include="SceneTest.h" />
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="Shadow.h" />
+    <ClInclude Include="UIBigHp.h" />
+    <ClInclude Include="UIDayTime.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIGauge.h" />
     <ClInclude Include="UIHP.h" />
   </ItemGroup>
   <ItemGroup>
