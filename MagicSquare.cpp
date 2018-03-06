@@ -50,6 +50,9 @@ void MagicSquare::OnDraw(void)
 	// ライトなし
 	pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+	// フォグなし
+	pDevice->SetRenderState(D3DRS_FOGENABLE, FALSE);
+
 }
 
 void MagicSquare::AfterDraw(void)
@@ -63,5 +66,8 @@ void MagicSquare::AfterDraw(void)
 
 	// ライトあり
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+	// フォグあり
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
 
 }

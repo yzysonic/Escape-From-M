@@ -12,6 +12,7 @@ Player::Player(void)
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
 	this->element_num = 0;
+	this->init_attack = [] {};
 	this->update_attack = [] {};
 
 	// AttackTarget‰Šú‰»

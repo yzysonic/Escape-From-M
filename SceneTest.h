@@ -25,14 +25,11 @@ private:
 	EnemyManager* enemy_manager;
 	Barrier* barrier;
 	Object* field;
-	Object* test_obj;
 	Enemy* enemy;
 	UIBigHp* ui_bighp;
 	UIElement* ui_element;
 	UIDayTime* ui_daytime;
-	bool camera_play_mode;
-	bool light_on;
+	FrameTimer timer;
 	bool gameover;
 	int day_count;
-	FrameTimer timer;
 };
