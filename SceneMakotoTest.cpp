@@ -8,25 +8,12 @@
 #include "FadeScreen.h"
 #include "CameraPlay.h"
 #include "CameraSmooth.h"
+#include "SceneGameOver.h"
+#include "SceneClear.h"
 
 void SceneMakotoTest::Init(void)
 {
-	Texture::LoadTexture("attack");
-	Texture::LoadTexture("body_sum", "body_sum.tga");
-	Texture::LoadTexture("misaki_head", "misaki_head.tga");
-	Texture::LoadTexture("enemy");
-	Texture::LoadTexture("white_field", "white_field.jpg");
-	Texture::LoadTexture("shadow");
-	Texture::LoadTexture("magic_square");
-	Texture::LoadTexture("player");
-	Texture::LoadTexture("bullet_enemy");
-	Texture::LoadTexture("bullet_player");
-
-	PixelShader::Load("BarrierPS.hlsl");
-
-	// ライティング
-	this->light_on = true;
-	//Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
+	this->day_count = 1;
 
 	// カメラ初期化
 	this->camera = new Camera;
@@ -37,18 +24,32 @@ void SceneMakotoTest::Init(void)
 	this->camera->transform.position = Vector3(0.0f, 40.0f, -120.0f);
 	this->camera->AddComponent<CameraPlay>();
 	this->camera_play_mode = false;
+	this->timer.Reset(120.0f);
 	Renderer::GetInstance()->setCamera(this->camera);
+
+	// UI初期化
+	this->ui_element = new UIElement(
+		10 + (int)Texture::Get("ui_element_title")->size.x - SystemParameters::ResolutionX / 2,
+		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2
+	);
+	this->ui_day = new NumberUI(
+		1,
+		SystemParameters::ResolutionX / 2 - 70,
+		0 - (int)Texture::Get("number")->size.y + SystemParameters::ResolutionY / 2,
+		"number", "ui_day_title"
+	);
+	this->ui_day->SetNumber(this->day_count);
 
 	// 床初期化
 	this->field = new Object;
 	this->field->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
 
 	Vertex3D *pVtx;
-	this->field->AddComponent<RectPolygon>("white_field", Layer::BG_00)->LockBuff(&pVtx);
+	this->field->AddComponent<RectPolygon>("dark_grass", Layer::BG_00)->LockBuff(&pVtx);
 	pVtx[0].uv = Vector2(0.0, 0.0f);
-	pVtx[1].uv = Vector2(300.0, 0.0f);
-	pVtx[2].uv = Vector2(0.0, 300.0f);
-	pVtx[3].uv = Vector2(300.0, 300.0f);
+	pVtx[1].uv = Vector2(10.0, 0.0f);
+	pVtx[2].uv = Vector2(0.0, 10.0f);
+	pVtx[3].uv = Vector2(10.0, 10.0f);
 	this->field->GetComponent<RectPolygon>()->UnlockBuff();
 	this->field->GetComponent<RectPolygon>()->SetSize(400.0f*Vector2::one);
 
@@ -63,36 +64,40 @@ void SceneMakotoTest::Init(void)
 			this->camera_play_mode = false;
 		}
 	};
+	this->player->event_get_element += [&] {
+		this->ui_element->SetNumber(this->player->GetElementNum());
+	};
+	this->player->event_death += [&] {
+		gameover = true;
+	};
+
 	this->camera->AddComponent<CameraSmooth>(this->player);
 
 	// 魔法陣初期化
 	this->magic_square = new MagicSquare;
+	this->magic_square->event_death += [&] {
+		gameover = true;
+	};
 
 	// 結界初期化
 	this->barrier = new Barrier;
 
 	// エネミー初期化
-	Transform t;
-	this->enemy = new EnemyNormal;
-	this->enemy->transform.position = Vector3(50.0f, 0.0f, -50);
-	//this->enemy->target = this->barrier;
+	this->enemy_manager = new EnemyManager;
+	this->enemy_manager->target1 = this->barrier;
+	this->enemy_manager->target2 = this->magic_square;
+	this->enemy_manager->target3 = this->player;
 
-	// エネミーレア初期化
-	this->enemyr = new EnemyRare;
-	this->enemyr->transform.position = Vector3(0.0f, 0.0f, -50);
-	//this->enemyr->target = this->player;
+	FadeScreen::FadeIn(Color::black, 0.0f);
 
-	// エネミービッグ初期化
-	this->enemyb = new EnemyBig;
-	this->enemyb->transform.position = Vector3(-50.0f, 0.0f, 0.0f);
-	//this->enemyb->target = this->barrier;
-
+	this->gameover = false;
 }
 
 void SceneMakotoTest::Update(void)
 {
 	// カメラモードの切替
-	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f)
+	Vector2 pad_input_r(GetPadRX(), GetPadRY());
+	if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f || pad_input_r.sqrLength() >= 0.01f)
 	{
 		if (!this->camera_play_mode)
 		{
@@ -101,15 +106,42 @@ void SceneMakotoTest::Update(void)
 			this->camera_play_mode = true;
 		}
 	}
+	
+	// ゲームオーバー
+	if (gameover == true)
+	{
+		GameManager::SetScene(new SceneGameOver);
+	}
 
-	// ライティングの切替
-	//if (GetKeyboardTrigger(DIK_L))
-	//{
-	//	if (this->light_on)
-	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, FALSE);
-	//	else
-	//		Direct3D::GetDevice()->SetRenderState(D3DRS_LIGHTING, TRUE);
-	//	this->light_on = !this->light_on;
-	//}
+	// ゲームクリア
+	if (this->timer.TimeUp())
+	{
+		GameManager::Var<int>("Day") = this->day_count;
+		GameManager::Var<int>("Magic") = this->magic_square->GetHp();
+		GameManager::Var<int>("Element") = this->player->GetElementNum();
+		GameManager::SetScene(new SceneClear);
+	}
+	timer++;
 
+	if (GetKeyboardTrigger(DIK_E))
+	{
+		this->enemy_manager->SwapNormal();
+		this->enemy_manager->SwapRear();
+	}
+
+	if (GetKeyboardTrigger(DIK_Q))
+	{
+		timer.Reset(0);
+	}
+
+	if (GetKeyboardTrigger(DIK_Z))
+	{
+		this->day_count++;
+	}
+}
+
+void SceneMakotoTest::Uninit(void)
+{
+	//StopSound(BGM_TITLE);
+	Renderer::GetInstance()->setCamera(nullptr);
 }

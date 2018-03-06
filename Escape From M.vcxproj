@@ -207,6 +207,7 @@
     <ClCompile Include="SceneMakotoTest.cpp" />
     <ClCompile Include="SceneTest.cpp" />
     <ClCompile Include="SceneTitle.cpp" />
+    <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="UIBigHp.cpp" />
     <ClCompile Include="UIDayTime.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="SceneMakotoTest.h" />
     <ClInclude Include="SceneTest.h" />
     <ClInclude Include="SceneTitle.h" />
+    <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="UIBigHp.h" />
     <ClInclude Include="UIDayTime.h" />

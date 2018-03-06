@@ -2,6 +2,7 @@
 #include "Core\Game.h"
 #include "FadeScreen.h"
 #include "SceneGame.h"
+#include "SceneGameOver.h"
 
 // ‰Šú‰»
 void SceneTitle::Init(void)
