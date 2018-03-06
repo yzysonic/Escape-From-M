@@ -1,18 +1,16 @@
 #include "CameraPlay.h"
 
-
-CameraPlay::CameraPlay(void)
-{
-	active_on_load = false;
-}
-
 void CameraPlay::Init(void)
 {
 	camera = dynamic_cast<Camera*>(object);
 	Vector3 offset = camera->transform.position - camera->at;
 
+	target_theta =
 	theta = atan2f(sqrtf(offset.x*offset.x + offset.z*offset.z), offset.y);
+
+	target_phi =
 	phi = atan2f(offset.z, offset.x);
+
 	move_theta = 0.0f;
 	move_phi = 0.0f;
 	dis = offset.length();
@@ -92,8 +90,8 @@ void CameraPlay::MoveCamera(void)
 	Vector2 pad_input_r(GetPadRX(), GetPadRY());
 	if (pad_input_r.sqrLength() >= 0.05f && !IsButtonPressed(0, BUTTON_L1))
 	{
-		move_phi = -pad_input_r.x*0.02f;
-		move_theta = -pad_input_r.y*0.02f;
+		move_phi = -pad_input_r.x*0.03f;
+		move_theta = -pad_input_r.y*0.03f;
 	}
 
 	// ƒY[ƒ€
@@ -109,31 +107,23 @@ void CameraPlay::MoveCamera(void)
 
 	dis = dis + (target_dis - dis)*0.15f;
 
-
-
-	if (move_phi != 0.0f)
+	if(Vector2(move_phi, move_theta).sqrLength() != 0.0f)
 	{
-		phi += move_phi;
-		if (fabsf(move_phi) >= 0.001f)
-			move_phi *= 0.92f;
-		else
-			move_phi = 0.0f;
-	}
-	if (move_theta != 0.0f)
-	{
-		theta += move_theta;
+		target_phi += move_phi;
+		target_theta += move_theta;
 
-		if (theta < Deg2Rad(30.0f))
-			theta = Deg2Rad(30.0f);
-		if (theta > Deg2Rad(85.0f))
-			theta = Deg2Rad(85.0f);
+		move_phi = 0.0f;
+		move_theta = 0.0f;
 
-		if (fabsf(move_theta) >= 0.001f)
-			move_theta *= 0.92f;
-		else
-			move_theta = 0.0f;
+		if (target_theta < Deg2Rad(30.0f))
+			target_theta = Deg2Rad(30.0f);
+		if (target_theta > Deg2Rad(85.0f))
+			target_theta = Deg2Rad(85.0f);
+
 	}
 
+	phi = Lerpf(phi, target_phi, 0.065f);
+	theta = Lerpf(theta, target_theta, 0.065f);
 
 	if (move.x != 0.0f || move.y != 0.0f)
 	{

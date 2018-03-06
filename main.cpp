@@ -54,7 +54,7 @@ int APIENTRY WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 #ifndef _DEBUG
 	GameManager::GetInstance()->SetScene(new SceneTitle);
 #else
-	GameManager::GetInstance()->SetScene(new SceneMakotoTest);
+	GameManager::GetInstance()->SetScene(new SceneTest);
 #endif
 
 	// ƒQ[ƒ€ƒ‹[ƒv

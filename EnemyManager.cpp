@@ -15,18 +15,7 @@ void EnemyManager::Update(void)
 {
 	if (this->check_timer.TimeUp())
 	{
-		if (this->target1)
-		{
-			if (this->target1->GetHp() > 0)
-			{
-				this->target_now = this->target1;
-			}
-			else if (this->target2)
-			{
-				if (this->target2->GetHp() > 0)
-					this->target_now = this->target2;
-			}
-		}
+		UpdateTarget();
 		this->check_timer.Reset();
 	}
 	
@@ -64,5 +53,22 @@ void EnemyManager::SwapRear(void)
 	enemy->target = &this->target3;
 	enemy->transform.position.x = SwapRadius * cosf(angle);
 	enemy->transform.position.z = SwapRadius * sinf(angle);
+
+}
+
+void EnemyManager::UpdateTarget(void)
+{
+	if (this->target1)
+	{
+		if (this->target1->GetHp() > 0)
+		{
+			this->target_now = this->target1;
+		}
+		else if (this->target2)
+		{
+			if (this->target2->GetHp() > 0)
+				this->target_now = this->target2;
+		}
+	}
 
 }

@@ -22,10 +22,13 @@ public:
 	void Update(void) override;
 	void SwapNormal(void);
 	void SwapRear(void);
+	void UpdateTarget(void);
+
 
 private:
 	FrameTimer swap_timer;
 	FrameTimer check_timer;
 	int enemy_count;
 	AttackTarget* target_now;
+
 };

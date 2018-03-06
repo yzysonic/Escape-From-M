@@ -2,7 +2,7 @@
 #include "Core/Direct3D.h"
 
 D3DLIGHT9 Light::light[NUM_LIGHT];
-Light* Light::instance = nullptr;
+smart_ptr<Light> Light::instance;
 
 //=============================================================================
 // ÉâÉCÉgÇÃèâä˙âªèàóù
@@ -10,7 +10,7 @@ Light* Light::instance = nullptr;
 void Light::Init(void)
 {
 	if (instance == nullptr)
-		instance = new Light;
+		instance.reset(new Light);
 
 	LPDIRECT3DDEVICE9 pDevice = Direct3D::GetDevice();
 	D3DXVECTOR3 vecDir;
@@ -63,7 +63,7 @@ void Light::Init(void)
 
 Light* Light::GetInstance(void)
 {
-	return instance;
+	return instance.get();
 }
 
 HRESULT Light::OnLostDevice(void)

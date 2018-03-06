@@ -14,5 +14,5 @@ public:
 
 private:
 	static D3DLIGHT9 light[NUM_LIGHT];	// ƒ‰ƒCƒgî•ñ
-	static Light* instance;
+	static smart_ptr<Light> instance;
 };

@@ -6,6 +6,7 @@
 #include "SceneGameOver.h"
 #include "FadeScreen.h"
 #include "Light.h"
+#include "Core\Game.h"
 
 void SceneGlobal::Init(void)
 {
@@ -45,20 +46,25 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("result_title");
 	Texture::LoadTexture("number_score", "number_score.png", 10);
 	Texture::LoadTexture("game_score");
+	Texture::LoadTexture("bark01_bottom", "bark01_bottom.tga");
+	Texture::LoadTexture("branch01", "branch01.tga");
+
 
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");
 
 	auto pDevice = Direct3D::GetDevice();
 
-	//float Start = 0.5f;
-	//float End = 0.8f;
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
-	//pDevice->SetRenderState(D3DRS_FOGCOLOR, 0x00d0e0f0);
+	float Start = 50.0f;
+	float End = 300.0f;
+	float Density = 0.66f;
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_FOGCOLOR, 0x5EDEFFFF);
 	//pDevice->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
-	////pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
-	//pDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
-	//pDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
+	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+	//pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)(&Density));
+	pDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
+	pDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 
 	Light::Init();
 }
@@ -78,6 +84,8 @@ void SceneGlobal::Update(void)
 		gm->SetScene(new SceneGameOver);
 	if (GetKeyboardTrigger(DIK_4))
 		gm->SetScene(new SceneClear);
+	if (GetKeyboardTrigger(DIK_G))
+		Game::Stop();
 
 #endif
 }

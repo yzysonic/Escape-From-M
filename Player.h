@@ -84,8 +84,11 @@ public:
 	{
 	public:
 		StateAttack(Player* player) : State(player) {}
+		void OnEnter(void) override;
 		void Update(void) override;
 		void SetState(StateName state) override;
+	private:
+		FrameTimer timer;
 	};
 
 	// •‰ó‘Ô
@@ -129,6 +132,7 @@ private:
 	FrameTimer bullet_timer;
 	float speed;
 	int element_num;
+	std::function<void(void)> init_attack;
 	std::function<void(void)> update_attack;
 
 
