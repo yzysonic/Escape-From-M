@@ -4,6 +4,7 @@
 #include "SceneGame.h"
 #include "SceneClear.h"
 #include "SceneGameOver.h"
+#include "SceneNoon.h"
 #include "FadeScreen.h"
 #include "Light.h"
 #include "Core\Game.h"
@@ -48,6 +49,11 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("game_score");
 	Texture::LoadTexture("bark01_bottom", "bark01_bottom.tga");
 	Texture::LoadTexture("branch01", "branch01.tga");
+	Texture::LoadTexture("Cursor");
+	Texture::LoadTexture("Item");
+	Texture::LoadTexture("waku");
+	Texture::LoadTexture("sentaku");
+	Texture::LoadTexture("rensei");
 	Texture::LoadTexture("terrain");
 
 
@@ -71,6 +77,7 @@ void SceneGlobal::Init(void)
 	//this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
 }
 
+
 void SceneGlobal::Update(void)
 {
 #ifdef _DEBUG
@@ -86,8 +93,8 @@ void SceneGlobal::Update(void)
 		gm->SetScene(new SceneGameOver);
 	if (GetKeyboardTrigger(DIK_4))
 		gm->SetScene(new SceneClear);
-	if (GetKeyboardTrigger(DIK_G))
-		Game::Stop();
+	if (GetKeyboardTrigger(DIK_5))
+		gm->SetScene(new SceneNoon);
 
 #endif
 }

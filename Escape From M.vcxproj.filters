@@ -11,14 +11,14 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Script">
-      <UniqueIdentifier>{4f42a833-4c00-492d-ac1d-7eae1589179f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Model">
       <UniqueIdentifier>{eb8b23ec-a3c6-4931-a332-64a56c9b00c8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Shader">
       <UniqueIdentifier>{af8e5dc3-1011-4218-aad7-7ed72a852c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene\Script">
+      <UniqueIdentifier>{4f42a833-4c00-492d-ac1d-7eae1589179f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -141,7 +141,7 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="CameraPlay.cpp">
-      <Filter>Script</Filter>
+      <Filter>Scene\Script</Filter>
     </ClCompile>
     <ClCompile Include="Core\AllocateHirerachy.cpp">
       <Filter>Core\Model</Filter>
@@ -159,7 +159,7 @@
       <Filter>GameObject</Filter>
     </ClCompile>
     <ClCompile Include="CameraSmooth.cpp">
-      <Filter>Script</Filter>
+      <Filter>Scene\Script</Filter>
     </ClCompile>
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="Shadow.cpp">
@@ -236,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="GameCamera.cpp">
       <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneNoon.cpp">
+      <Filter>Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -375,7 +378,7 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="CameraPlay.h">
-      <Filter>Script</Filter>
+      <Filter>Scene\Script</Filter>
     </ClInclude>
     <ClInclude Include="Core\AllocateHirerachy.h">
       <Filter>Core\Model</Filter>
@@ -393,7 +396,7 @@
       <Filter>GameObject</Filter>
     </ClInclude>
     <ClInclude Include="CameraSmooth.h">
-      <Filter>Script</Filter>
+      <Filter>Scene\Script</Filter>
     </ClInclude>
     <ClInclude Include="Light.h" />
     <ClInclude Include="Shadow.h">
@@ -470,6 +473,9 @@
     </ClInclude>
     <ClInclude Include="GameCamera.h">
       <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneNoon.h">
+      <Filter>Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
