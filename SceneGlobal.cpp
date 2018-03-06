@@ -54,15 +54,21 @@ void SceneGlobal::Init(void)
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");
 
+	// フォグの初期化
 	auto pDevice = Direct3D::GetDevice();
-
 	float Density = 0.005f;
 	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_FOGCOLOR, 0xFF5EDEFF);
 	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP2);
 	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)(&Density));
 
+	// ライト初期化
 	Light::Init();
+
+	// フィールド初期化
+	//this->field = new Object;
+	//this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
+	//this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
 }
 
 void SceneGlobal::Update(void)

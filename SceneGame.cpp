@@ -28,10 +28,10 @@ void SceneGame::Init(void)
 	);
 	this->ui_daytime->SetDay(1);
 
-	// フィールド初期化
-	this->field = new Object;
-	this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
-	this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
+	//// フィールド初期化
+	//this->field = new Object;
+	//this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
+	//this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
 
 
 	// プレイヤー初期化
