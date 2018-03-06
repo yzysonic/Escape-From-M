@@ -24,7 +24,7 @@ void SceneMakotoTest::Init(void)
 	this->camera->transform.position = Vector3(0.0f, 40.0f, -120.0f);
 	this->camera->AddComponent<CameraPlay>();
 	this->camera_play_mode = false;
-	this->timer.Reset(120.0f);
+	this->timer.Reset(10.0f);
 	Renderer::GetInstance()->setCamera(this->camera);
 
 	// UI‰Šú‰»

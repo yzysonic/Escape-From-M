@@ -4,6 +4,7 @@
 #include "SceneGame.h"
 #include "SceneClear.h"
 #include "SceneGameOver.h"
+#include "SceneNoon.h"
 #include "FadeScreen.h"
 #include "Light.h"
 
@@ -72,6 +73,8 @@ void SceneGlobal::Update(void)
 		gm->SetScene(new SceneGameOver);
 	if (GetKeyboardTrigger(DIK_4))
 		gm->SetScene(new SceneClear);
+	if (GetKeyboardTrigger(DIK_5))
+		gm->SetScene(new SceneNoon);
 
 #endif
 }
