@@ -202,6 +202,9 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="NumberUI.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
+    <ClCompile Include="PlayerBulletArea.cpp" />
+    <ClCompile Include="PlayerBulletLong.cpp" />
     <ClCompile Include="PlayerBulletShort.cpp" />
     <ClCompile Include="SceneClear.cpp" />
     <ClCompile Include="SceneGame.cpp" />
@@ -283,6 +286,9 @@
     <ClInclude Include="Element.h" />
     <ClInclude Include="NumberUI.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerBullet.h" />
+    <ClInclude Include="PlayerBulletArea.h" />
+    <ClInclude Include="PlayerBulletLong.h" />
     <ClInclude Include="PlayerBulletShort.h" />
     <ClInclude Include="SceneClear.h" />
     <ClInclude Include="SceneGame.h" />

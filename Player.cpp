@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "PlayerBulletShort.h"
+#include "PlayerBulletLong.h"
+#include "PlayerBulletArea.h"
 
 //=============================================================================
 // Player
@@ -136,9 +138,6 @@ void Player::Move(void)
 
 	// Œü‚«‚ÌÝ’è
 	this->transform.setFront(move);
-
-	// ˆÚ“®ó‘Ô‚É‘JˆÚ
-	this->current_state->SetState(StateName::Move);
 }
 
 void Player::AttackControl(void)
@@ -163,11 +162,63 @@ void Player::AttackControl(void)
 	}
 
 	else if (GetKeyboardTrigger(KeyAtkLong) || IsButtonTriggered(0, BtnAtkLong))
-		this->SetAnime(AnimeSet::AttackLong, false);
+	{
+		this->init_attack = [&] {
+			this->SetAnime(AnimeSet::AttackLong, false);
+			this->bullet_timer.Reset(0.04f);
+			this->update_attack = [&] {
+				// ’e”­ŽËˆ—
+				if (this->anime_timer.Elapsed() < 0.3f || this->anime_timer.Elapsed() > 0.7f)
+					return;
+
+				if (this->bullet_timer.TimeUp())
+				{
+					ShootBulletLong();
+					this->bullet_timer.Reset();
+				}
+				this->bullet_timer++;
+
+				// ‰ñ“]ˆ—
+				float control_len = this->control.length();
+				if (control_len > 0.01f)
+				{
+					auto camera = Renderer::GetInstance()->getCamera();
+					Vector3 offset = this->transform.position - camera->transform.position;
+					float phi = atan2f(offset.z, offset.x) - 0.5f*PI;
+
+					Vector3 move;
+					move.x = control.x*cosf(phi) - control.z*sinf(phi);
+					move.z = control.x*sinf(phi) + control.z*cosf(phi);
+
+					// Œü‚«‚ÌÝ’è
+					this->transform.setFront(move);
+				}
+
+			};
+
+		};
+	}
 
 	else if (GetKeyboardTrigger(KeyAtkArea) || IsButtonTriggered(0, BtnAtkArea))
-		this->SetAnime(AnimeSet::AttackArea, false);
+	{
+		this->init_attack = [&] {
+			this->SetAnime(AnimeSet::AttackArea, false);
+			this->bullet_timer.Reset(0.005f);
+			this->update_attack = [&] {
+				// ’e”­ŽËˆ—
+				if (this->anime_timer.Elapsed() > 0.2f)
+					return;
 
+				if (this->bullet_timer.TimeUp())
+				{
+					ShootBulletArea();
+					this->bullet_timer.Reset();
+				}
+				this->bullet_timer++;
+			};
+
+		};
+	}
 	else return;
 
 	this->current_state->SetState(StateName::Attack);
@@ -179,7 +230,30 @@ void Player::ShootBulletShort(void)
 	t.rotate(0.0f, Deg2Rad(Lerpf(50.0f, -50.0f, this->anime_timer.Elapsed()/0.3f)), 0.0f);
 	t.position += t.getFront()*5.0f;
 	t.position.y += 3.0f;
-	new PlayerBulletShort(t, 0.3f-this->anime_timer.Elapsed(), this->atk);
+	new PlayerBulletShort(t, this->atk, 0.3f - this->anime_timer.Elapsed());
+}
+
+void Player::ShootBulletLong(void)
+{
+	Transform t = this->transform;
+	t.position += t.getFront()*5.0f;
+	t.position.y += 3.0f;
+	new PlayerBulletLong(t, this->atk);
+}
+
+void Player::ShootBulletArea(void)
+{
+	Transform t = this->transform;
+	float theta = Lerpf(0.0f, 2.0f*PI, this->anime_timer.Elapsed() / 0.2f);
+	t.setRotation(0.0f, theta, 0.0f);
+	t.position.y += 10.0f;
+	new PlayerBulletArea(t, this->atk, 9.0f);
+
+	t.setRotation(0.0f, theta, 0.0f);
+	new PlayerBulletArea(t, this->atk, 11.0f);
+
+	t.setRotation(0.0f, theta, 0.0f);
+	new PlayerBulletArea(t, this->atk, 13.0f);
 }
 
 

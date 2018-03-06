@@ -1,23 +1,11 @@
 #include "PlayerBulletShort.h"
-#include "AttackTarget.h"
 
-PlayerBulletShort::PlayerBulletShort(Transform transform, float wait_time, int atk)
+PlayerBulletShort::PlayerBulletShort(Transform transform, int atk, float wait_time) : PlayerBullet(transform, atk)
 {
-	this->billboard = AddComponent<Billboard>("bullet_player");
-	this->collider = AddComponent<SphereCollider>();
-	this->collider->radius = 0.5f*InitSize;
-
-	this->type = ObjectType::Bullet;
-
-	this->transform.position = transform.position;
-	this->transform.setRotation(transform.getRotation());
-	this->transform.scale *= InitSize;
 	this->last_pos = transform.position;
 	this->target_pos = this->last_pos + this->transform.getFront()*7.0f;
 	this->state = 0;
-	this->timer.Reset(0.1f);
 	this->syn_timer.Reset(wait_time + 0.1f);
-	this->atk = atk;
 }
 
 void PlayerBulletShort::Update(void)
@@ -59,34 +47,4 @@ void PlayerBulletShort::Update(void)
 
 	}
 	this->timer++;
-}
-
-void PlayerBulletShort::OnCollision(Object * other)
-{
-	if (other->type == ObjectType::Enemy)
-	{
-		auto target = dynamic_cast<AttackTarget*>(other);
-		target->Damage(atk);
-	}
-	else if (other->type == ObjectType::Bullet_E)
-	{
-		other->Destroy();
-	}
-}
-
-void PlayerBulletShort::OnDraw(void)
-{
-	auto pDevice = Direct3D::GetDevice();
-
-	// アルファテスト
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_ALPHAREF, 0);
-	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-}
-
-void PlayerBulletShort::AfterDraw(void)
-{
-	auto pDevice = Direct3D::GetDevice();
-
-	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, FALSE);
 }

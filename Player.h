@@ -9,7 +9,7 @@
 #define KeyAtkArea	DIK_L
 #define BtnAtkShort	BUTTON_SQ
 #define BtnAtkLong	BUTTON_TR
-#define BtnAtkArea	BUTTON_CR
+#define BtnAtkArea	BUTTON_CI
 
 #define PlayerSpeed (20.0f)
 
@@ -143,4 +143,6 @@ private:
 	void Move(void);
 	void AttackControl(void);
 	void ShootBulletShort(void);
+	void ShootBulletLong(void);
+	void ShootBulletArea(void);
 };
