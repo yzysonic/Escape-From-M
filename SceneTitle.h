@@ -39,6 +39,4 @@ private:
 
 	// ÉJÅ[É\Éã
 	int cursorPos;
-
-	void update_fadeWait(void);
 };

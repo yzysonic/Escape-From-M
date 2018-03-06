@@ -4,7 +4,7 @@
 
 GameCamera::GameCamera(void)
 {
-	this->setBackColor(Color(223, 223, 223, 255));
+	this->setBackColor(Color(100, 193, 248, 255));
 	this->near_z = 20.0f;
 	this->far_z = 500.0f;
 	this->fov = Deg2Rad(45.0f);

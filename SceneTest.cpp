@@ -1,7 +1,5 @@
 #include "SceneTest.h"
 #include "FadeScreen.h"
-#include "CameraPlay.h"
-#include "CameraSmooth.h"
 #include "SceneGameOver.h"
 #include "SceneClear.h"
 
@@ -26,30 +24,13 @@ void SceneTest::Init(void)
 	);
 	this->ui_daytime->SetDay(1);
 
-	// 床初期化
-	//this->field = new Object;
-	//this->field->transform.setRotation(0.5f*PI, 0.0f, 0.0f);
-
-	//Vertex3D *pVtx;
-	//this->field->AddComponent<RectPolygon>("dark_grass", Layer::BG_00)->LockBuff(&pVtx);
-	//pVtx[0].uv = Vector2(0.0, 0.0f);
-	//pVtx[1].uv = Vector2(10.0, 0.0f);
-	//pVtx[2].uv = Vector2(0.0, 10.0f);
-	//pVtx[3].uv = Vector2(10.0, 10.0f);
-	//this->field->GetComponent<RectPolygon>()->UnlockBuff();
-	//this->field->GetComponent<RectPolygon>()->SetSize(400.0f*Vector2::one);
+	// フィールド初期化
+	this->field = new Object;
+	this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
+	this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
 
 	// プレイヤー初期化
 	this->player = new Player;
-	//this->player->event_move += [&]
-	//{
-	//	if (this->camera_play_mode)
-	//	{
-	//		this->camera->GetComponent<CameraPlay>()->SetActive(false);
-	//		this->camera->GetComponent<CameraSmooth>()->SetActive(true);
-	//		this->camera_play_mode = false;
-	//	}
-	//};
 	this->player->event_get_element += [&] {
 		this->ui_element->SetNumber(this->player->GetElementNum());
 	};
@@ -84,27 +65,13 @@ void SceneTest::Init(void)
 	this->enemy_manager->target2 = this->magic_square;
 	this->enemy_manager->target3 = this->player;
 	this->enemy_manager->UpdateTarget();
+
 	FadeScreen::FadeIn(Color::black, 0.0f);
 
-	//this->test_obj = new Object;
-	//this->test_obj->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
-	//this->test_obj->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
 }
 
 void SceneTest::Update(void)
 {
-	// カメラモードの切替
-	//Vector2 pad_input_r(GetPadRX(), GetPadRY());
-	//if (IsMouseLeftPressed() || fabsf((float)GetMouseMoveZ()) > 0.0f || pad_input_r.sqrLength() >= 0.01f)
-	//{
-	//	if (!this->camera_play_mode)
-	//	{
-	//		this->camera->GetComponent<CameraSmooth>()->SetActive(false);
-	//		this->camera->GetComponent<CameraPlay>()->SetActive(true);
-	//		this->camera_play_mode = true;
-	//	}
-	//}
-
 	if (GetKeyboardTrigger(DIK_E))
 	{
 		this->enemy_manager->SwapNormal();

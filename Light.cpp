@@ -22,8 +22,8 @@ void Light::Init(void)
 	light[0].Type = D3DLIGHT_DIRECTIONAL;
 
 	// ライト0の拡散光の設定
-	light[0].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	//g_aLight[0].Ambient = D3DXCOLOR(0.7f, 0.76f, 0.8f, 1.0f);
+	light[0].Diffuse = D3DXCOLOR(0xfff6cb6e);
+	light[0].Ambient = D3DXCOLOR(0x99f6cb6e);
 
 	// ライト0の方向の設定
 	vecDir = D3DXVECTOR3(968.0f, -934.0f, 2689.0f);
@@ -36,29 +36,10 @@ void Light::Init(void)
 	pDevice->LightEnable(0, TRUE);
 
 
-	// D3DLIGHT9構造体を0でクリアする
-	ZeroMemory(&light[1], sizeof(D3DLIGHT9));
-
-	// ライト1のタイプの設定
-	light[1].Type = D3DLIGHT_DIRECTIONAL;
-
-	// ライト1の拡散光の設定
-	light[1].Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	//g_aLight[1].Ambient = D3DXCOLOR(0.7f, 0.76f, 0.8f, 1.0f);
-
-	// ライト1の方向の設定
-	vecDir = D3DXVECTOR3(968.0f, -934.0f, 2689.0f);
-	D3DXVec3Normalize((D3DXVECTOR3*)&light[1].Direction, &vecDir);
-
-	// ライト1をレンダリングパイプラインに設定
-	pDevice->SetLight(1, &light[1]);
-
-	// ライト1の設定
-	pDevice->LightEnable(1, TRUE);
-
 	// ライティングモードをON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-	pDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_RGBA(233, 255, 210, 255));
+	pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(0xff42c3ff));
+	//pDevice->SetRenderState(D3DRS_AMBIENT, D3DXCOLOR(0xfff6cb6e));
 }
 
 Light* Light::GetInstance(void)

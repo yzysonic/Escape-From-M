@@ -48,6 +48,7 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("game_score");
 	Texture::LoadTexture("bark01_bottom", "bark01_bottom.tga");
 	Texture::LoadTexture("branch01", "branch01.tga");
+	Texture::LoadTexture("terrain");
 
 
 	// シェーダーの初期化
@@ -55,16 +56,11 @@ void SceneGlobal::Init(void)
 
 	auto pDevice = Direct3D::GetDevice();
 
-	float Start = 50.0f;
-	float End = 300.0f;
-	float Density = 0.66f;
+	float Density = 0.005f;
 	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
-	pDevice->SetRenderState(D3DRS_FOGCOLOR, 0x5EDEFFFF);
-	//pDevice->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
-	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
-	//pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)(&Density));
-	pDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
-	pDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
+	pDevice->SetRenderState(D3DRS_FOGCOLOR, 0xFF5EDEFF);
+	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_EXP2);
+	pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)(&Density));
 
 	Light::Init();
 }

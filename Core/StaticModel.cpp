@@ -83,6 +83,7 @@ StaticModel::~StaticModel(void)
 {
 	SafeRelease(this->pMesh);
 	SafeRelease(this->pBuffMaterial);
+	SafeFree(this->pTextures);
 }
 
 
