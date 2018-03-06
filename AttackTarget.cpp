@@ -29,18 +29,17 @@ void AttackTarget::Damage(int point)
 	if (!this->damage_timer.TimeUp())
 		return;
 
+	if (this->hp > 0)
+	{
+		this->uihp->SetOpacity(1.0f);
+		this->hp -= point;
+		this->uihp->SetPercent((float)this->hp / max_hp);
+
+		if (this->hp == 0)
+			this->event_death();
+	}
+
 	this->event_damage();
-
-	if (this->hp == 0)
-		return;
-
-	this->uihp->SetOpacity(1.0f);
-
-	this->hp -= point;
-	this->uihp->SetPercent((float)this->hp / max_hp);
-
-	if (this->hp == 0)
-		this->event_death();
 
 	this->damage_timer.Reset();
 

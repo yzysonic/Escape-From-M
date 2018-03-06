@@ -94,4 +94,6 @@ void SceneGame::Update(void)
 
 void SceneGame::Uninit(void)
 {
+	//StopSound(BGM_TITLE);
+	Renderer::GetInstance()->setCamera(nullptr);
 }

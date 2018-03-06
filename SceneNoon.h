@@ -1,6 +1,7 @@
 #pragma once
 #include "Core/Scene.h"
 #include "Core/Core.h"
+#include "NumberUI.h"
 
 class SceneNoon : public Scene
 {
@@ -10,6 +11,23 @@ public:
 	void Uninit(void) override;
 
 private:
+	Object *ElementObj;
+	Object *ElementObj1;
+	Object *ElementObj2;
+	Object *ElementObj3;
+	Object *Cursor;
+	Object *background;
+	Object *Item;
+	Object *Waku;
+	Object *Sentaku;
+	Object *Sentaku1;
+	Object *Sentaku2;
+	NumberUI *Day;
+	NumberUI *gauge;
+	NumberUI *Element;
+	NumberUI *Element1;
+	NumberUI *Element2;
+	NumberUI *Element3;
 
 	enum State
 	{
@@ -28,16 +46,10 @@ private:
 	Camera *camera;
 
 	// âÊëú
-	Object *background = nullptr;
-	Object *logo = nullptr;
-	Object *info = nullptr;
-	Object *cursor = nullptr;
-	Object *start = nullptr;
-	Object *exit = nullptr;
 
 
 	// ÉJÅ[É\Éã
-	int cursorPos;
+	int cursor;
 
 	void update_fadeWait(void);
 };

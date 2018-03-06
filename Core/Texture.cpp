@@ -59,6 +59,7 @@ void Texture::LoadTexture(std::string name, std::string file_name, int divX, int
 			Direct3D::GetDevice(),
 			file_dir,
 			info.Width, info.Height,
+
 			D3DX_DEFAULT, 0,
 			D3DFMT_A8R8G8B8,
 			D3DPOOL_MANAGED,

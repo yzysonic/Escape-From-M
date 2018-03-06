@@ -1,13 +1,17 @@
 #pragma once
 #include "Core\Core.h"
 
+#define SmoothOffsetY (10.0f)
+
 class CameraSmooth : public Script
 {
 public:
-	CameraSmooth(Object* target) : target(&target->transform) {};
 	Transform *target = nullptr;
 	float speed;
-	Vector3 offset;
+	float offset_y = SmoothOffsetY;
+
+	CameraSmooth(void) {};
+	CameraSmooth(Object* target) : target(&target->transform) {};
 
 	void Init(void) override;
 	void Update(void) override;

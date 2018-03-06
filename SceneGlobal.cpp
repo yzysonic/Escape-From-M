@@ -7,6 +7,7 @@
 #include "SceneNoon.h"
 #include "FadeScreen.h"
 #include "Light.h"
+#include "Core\Game.h"
 
 void SceneGlobal::Init(void)
 {
@@ -36,27 +37,44 @@ void SceneGlobal::Init(void)
 	Texture::LoadTexture("number", "number.png", 10);
 	Texture::LoadTexture("ui_element_title");
 	Texture::LoadTexture("ui_day_title");
+	Texture::LoadTexture("ui_day_outline");
+	Texture::LoadTexture("ui_sun");
+	Texture::LoadTexture("ui_moon");
+	Texture::LoadTexture("ui_gauge");
+	Texture::LoadTexture("ui_bighp_title");
+	Texture::LoadTexture("ui_bighp_title2");
 	Texture::LoadTexture("game_over");
 	Texture::LoadTexture("result_title");
 	Texture::LoadTexture("number_score", "number_score.png", 10);
 	Texture::LoadTexture("game_score");
+	Texture::LoadTexture("bark01_bottom", "bark01_bottom.tga");
+	Texture::LoadTexture("branch01", "branch01.tga");
+	Texture::LoadTexture("Cursor");
+	Texture::LoadTexture("Item");
+	Texture::LoadTexture("waku");
+	Texture::LoadTexture("sentaku");
+	Texture::LoadTexture("rensei");
+
 
 	// シェーダーの初期化
 	VertexShader::Load("InstancingVS.hlsl");
 
 	auto pDevice = Direct3D::GetDevice();
 
-	//float Start = 0.5f;
-	//float End = 0.8f;
-	//pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
-	//pDevice->SetRenderState(D3DRS_FOGCOLOR, 0x00d0e0f0);
+	float Start = 50.0f;
+	float End = 300.0f;
+	float Density = 0.66f;
+	pDevice->SetRenderState(D3DRS_FOGENABLE, TRUE);
+	pDevice->SetRenderState(D3DRS_FOGCOLOR, 0x5EDEFFFF);
 	//pDevice->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
-	////pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
-	//pDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
-	//pDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
+	pDevice->SetRenderState(D3DRS_FOGTABLEMODE, D3DFOG_LINEAR);
+	//pDevice->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)(&Density));
+	pDevice->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&Start));
+	pDevice->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&End));
 
-	InitLight();
+	Light::Init();
 }
+
 
 void SceneGlobal::Update(void)
 {

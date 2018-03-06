@@ -149,7 +149,7 @@ bool Direct3D::ResetDevice()
 	s_pDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);			// αブレンドを行う
 	s_pDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);		// αソースカラーの指定
 	s_pDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);	// αデスティネーションカラーの指定
-	s_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+	s_pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 
 	// サンプラーステートパラメータの設定

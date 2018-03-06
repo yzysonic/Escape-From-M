@@ -196,6 +196,7 @@
     <ClCompile Include="EnemyNormal.cpp" />
     <ClCompile Include="EnemyRare.cpp" />
     <ClCompile Include="FadeScreen.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="MagicSquare.cpp" />
     <ClCompile Include="main.cpp" />
@@ -212,7 +213,10 @@
     <ClCompile Include="SceneTitle.cpp" />
     <ClCompile Include="ScoreUI.cpp" />
     <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="UIBigHp.cpp" />
+    <ClCompile Include="UIDayTime.cpp" />
     <ClCompile Include="UIElement.cpp" />
+    <ClCompile Include="UIGauge.cpp" />
     <ClCompile Include="UIHP.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +277,7 @@
     <ClInclude Include="EnemyRare.h" />
     <ClInclude Include="AttackTarget.h" />
     <ClInclude Include="FadeScreen.h" />
+    <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="MagicSquare.h" />
     <ClInclude Include="Element.h" />
@@ -289,7 +294,10 @@
     <ClInclude Include="SceneTitle.h" />
     <ClInclude Include="ScoreUI.h" />
     <ClInclude Include="Shadow.h" />
+    <ClInclude Include="UIBigHp.h" />
+    <ClInclude Include="UIDayTime.h" />
     <ClInclude Include="UIElement.h" />
+    <ClInclude Include="UIGauge.h" />
     <ClInclude Include="UIHP.h" />
   </ItemGroup>
   <ItemGroup>

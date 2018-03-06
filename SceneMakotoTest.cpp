@@ -10,6 +10,7 @@
 #include "CameraSmooth.h"
 #include "SceneGameOver.h"
 #include "SceneClear.h"
+#include "SceneNoon.h"
 
 void SceneMakotoTest::Init(void)
 {
@@ -24,7 +25,7 @@ void SceneMakotoTest::Init(void)
 	this->camera->transform.position = Vector3(0.0f, 40.0f, -120.0f);
 	this->camera->AddComponent<CameraPlay>();
 	this->camera_play_mode = false;
-	this->timer.Reset(10.0f);
+	this->timer.Reset(1.0f);
 	Renderer::GetInstance()->setCamera(this->camera);
 
 	// UI初期化
@@ -113,14 +114,24 @@ void SceneMakotoTest::Update(void)
 		GameManager::SetScene(new SceneGameOver);
 	}
 
+	//// ゲームクリア
+	//if (this->timer.TimeUp())
+	//{
+	//	GameManager::Var<int>("Day") = this->day_count;
+	//	GameManager::Var<int>("Magic") = this->magic_square->GetHp();
+	//	GameManager::Var<int>("Element") = this->player->GetElementNum();
+	//	GameManager::SetScene(new SceneClear);
+	//}
+
 	// ゲームクリア
 	if (this->timer.TimeUp())
 	{
 		GameManager::Var<int>("Day") = this->day_count;
-		GameManager::Var<int>("Magic") = this->magic_square->GetHp();
+		//GameManager::Var<int>("Magic") = this->magic_square->GetHp();
 		GameManager::Var<int>("Element") = this->player->GetElementNum();
-		GameManager::SetScene(new SceneClear);
+		GameManager::SetScene(new SceneNoon);
 	}
+
 	timer++;
 
 	if (GetKeyboardTrigger(DIK_E))

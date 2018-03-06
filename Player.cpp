@@ -12,6 +12,7 @@ Player::Player(void)
 	this->speed = PlayerSpeed;
 	this->anime = AnimeSet::Idle;
 	this->element_num = 0;
+	this->update_attack = [] {};
 
 	// AttackTarget‰Šú‰»
 	this->hp = this->max_hp = MaxHp;
@@ -143,18 +144,20 @@ void Player::AttackControl(void)
 {
 	if (GetKeyboardTrigger(KeyAtkShort) || IsButtonTriggered(0, BtnAtkShort))
 	{
-		this->SetAnime(AnimeSet::ShootBulletShort, false);
-		this->bullet_timer.Reset(0.03f);
-		this->update_attack = [&] {
-			if (this->anime_timer.Elapsed() > 0.3f)
-				return;
+		this->init_attack = [&] {
+			this->SetAnime(AnimeSet::ShootBulletShort, false);
+			this->bullet_timer.Reset(0.03f);
+			this->update_attack = [&] {
+				if (this->anime_timer.Elapsed() > 0.3f)
+					return;
 
-			if (this->bullet_timer.TimeUp())
-			{
-				ShootBulletShort();
-				this->bullet_timer.Reset();
-			}
-			this->bullet_timer++;
+				if (this->bullet_timer.TimeUp())
+				{
+					ShootBulletShort();
+					this->bullet_timer.Reset();
+				}
+				this->bullet_timer++;
+			};
 		};
 	}
 
@@ -259,6 +262,12 @@ void Player::StateMove::SetState(StateName state)
 // StateAttack
 //=============================================================================
 
+void Player::StateAttack::OnEnter(void)
+{
+	this->player->init_attack();
+	this->timer.Reset(0.5f);
+}
+
 void Player::StateAttack::Update(void)
 {
 	this->player->update_attack();
@@ -267,6 +276,7 @@ void Player::StateAttack::Update(void)
 		SetState(StateName::Idle);
 
 	this->player->anime_timer++;
+	this->timer++;
 }
 
 void Player::StateAttack::SetState(StateName state)
@@ -274,8 +284,12 @@ void Player::StateAttack::SetState(StateName state)
 	switch (state)
 	{
 	case StateName::Idle:
-	//case StateName::Damage:
 		State::SetState(state);
+		break;
+	case StateName::Attack:
+		if(this->timer.TimeUp())
+			State::SetState(state);
+		break;
 	}
 }
 
