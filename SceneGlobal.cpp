@@ -72,9 +72,11 @@ void SceneGlobal::Init(void)
 	Light::Init();
 
 	// フィールド初期化
-	//this->field = new Object;
-	//this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
-	//this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
+	this->field = new Object;
+	this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
+	this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
+	this->field->SetActive(false);
+	GameManager::Var<Object*>("field") = this->field;
 }
 
 

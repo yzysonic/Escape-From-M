@@ -14,6 +14,9 @@ void SceneGameOver::Init(void)
 	//SetVolume(BGM_GAMEOVER, -1800);
 	//PlayBGM(BGM_GAMEOVER);
 
+	// フィールドオフ
+	GameManager::Var<Object*>("field")->SetActive(false);
+
 	// フェイトイン効果
 	FadeScreen::FadeIn(Color::black);
 

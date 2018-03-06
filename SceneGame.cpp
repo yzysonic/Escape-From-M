@@ -28,12 +28,6 @@ void SceneGame::Init(void)
 	);
 	this->ui_daytime->SetDay(1);
 
-	//// フィールド初期化
-	//this->field = new Object;
-	//this->field->AddComponent<StaticModel>("stage")->alphaTestEnable = true;
-	//this->field->GetComponent<StaticModel>()->SetLayer(Layer::BG_01);
-
-
 	// プレイヤー初期化
 	this->player = new Player;
 	this->player->event_get_element += [&] {
@@ -69,6 +63,9 @@ void SceneGame::Init(void)
 	this->enemy_manager->target2 = this->magic_square;
 	this->enemy_manager->target3 = this->player;
 	this->enemy_manager->UpdateTarget();
+
+	// フィールドオン
+	GameManager::Var<Object*>("field")->SetActive(true);
 
 	// フェイトイン
 	FadeScreen::FadeIn(Color::black, 0.7f);
